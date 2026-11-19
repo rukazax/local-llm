@@ -1,3 +1,5 @@
+**← [Все проекты · All projects](https://github.com/rukazax?tab=repositories)**
+
 # local-llm · Локальный ИИ-сервер на 4× Tesla V100 SXM2
 
 <p align="center">
