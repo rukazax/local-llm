@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="560" viewBox="0 0 1240 560" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <style>
+      .t{fill:#101820}
+      .sub{fill:#5b6b7f}
+    </style>
+  </defs>
+  <rect width="1240" height="560" fill="#ffffff"/>
+  <text class="t" x="40" y="50" font-size="27" font-weight="700">Что ожидаем: одиночный декод, ток/с</text>
+  <text class="sub" x="40" y="80" font-size="15">Замеры сообщества на V100 + наши оценки для 4×32 · TP4 · NVLink</text>
+
+  <!-- grid -->
+  <g stroke="#e6ecf2" stroke-width="1">
+    <line x1="470" y1="110" x2="470" y2="470"/>
+    <line x1="630" y1="110" x2="630" y2="470"/>
+    <line x1="790" y1="110" x2="790" y2="470"/>
+    <line x1="950" y1="110" x2="950" y2="470"/>
+    <line x1="1110" y1="110" x2="1110" y2="470"/>
+  </g>
+  <g fill="#8fa3b8" font-size="12" text-anchor="middle">
+    <text x="470" y="492">0</text><text x="630" y="492">100</text><text x="790" y="492">200</text><text x="950" y="492">300</text><text x="1110" y="492">400</text>
+  </g>
+
+  <!-- rows: label, value, width, measured? -->
+  <!-- 1: Qwen3.8-27B NVFP4+MTP4 TP4, 426, 640, measured -->
+  <text class="t" x="40" y="140" font-size="15" font-weight="600">Qwen3.8-27B · NVFP4 + MTP4 · TP4</text>
+  <text class="sub" x="40" y="160" font-size="12">1Cat-LLM, флагман скорости · 892 агрегат</text>
+  <rect x="470" y="126" width="640" height="26" rx="6" fill="#76b900"/>
+  <text x="1122" y="145" font-size="14" font-weight="700" fill="#4c7a00">426</text>
+
+  <!-- 2: Flash-Next IQ3E 2x32 @256K, 122, measured -->
+  <text class="t" x="40" y="202" font-size="15" font-weight="600">Qwen3.8 Flash-Next · IQ3E · 2×V100 @256K</text>
+  <text class="sub" x="40" y="222" font-size="12">длинный контекст — главный сценарий RAG</text>
+  <rect x="470" y="188" width="183" height="26" rx="6" fill="#76b900"/>
+  <text x="665" y="207" font-size="14" font-weight="700" fill="#4c7a00">122</text>
+
+  <!-- 3: Coder-30B MoE, 100, estimate -->
+  <text class="t" x="40" y="264" font-size="15" font-weight="600">Qwen3-Coder-30B-A3B · Q5 · MoE</text>
+  <text class="sub" x="40" y="284" font-size="12">код-агент, 3B активных на токен</text>
+  <rect x="470" y="250" width="150" height="26" rx="6" fill="#e0a800"/>
+  <text x="632" y="269" font-size="14" font-weight="700" fill="#9a6f00">~100</text>
+
+  <!-- 4: DeepSeek V4.1 Flash 2-bit 4xV100, 91, measured -->
+  <text class="t" x="40" y="326" font-size="15" font-weight="600">DeepSeek V4.1 Flash · 2-bit · 4×V100</text>
+  <text class="sub" x="40" y="346" font-size="12">эксперты в RAM, гибридный режим</text>
+  <rect x="470" y="312" width="137" height="26" rx="6" fill="#76b900"/>
+  <text x="619" y="331" font-size="14" font-weight="700" fill="#4c7a00">91</text>
+
+  <!-- 5: GLM-4.5-Air Q5 MoE 110B, 55, estimate -->
+  <text class="t" x="40" y="388" font-size="15" font-weight="600">GLM-4.5-Air · Q5 · MoE 110B/12B</text>
+  <text class="sub" x="40" y="408" font-size="12">основная агентская модель</text>
+  <rect x="470" y="374" width="83" height="26" rx="6" fill="#e0a800"/>
+  <text x="565" y="393" font-size="14" font-weight="700" fill="#9a6f00">~55</text>
+
+  <!-- 6: Qwen2.5-72B Q6 dense, 30, estimate -->
+  <text class="t" x="40" y="450" font-size="15" font-weight="600">Qwen2.5-72B · Q6 · dense</text>
+  <text class="sub" x="40" y="470" font-size="12">тяжёлый ризонинг, русский</text>
+  <rect x="470" y="436" width="45" height="26" rx="6" fill="#e0a800"/>
+  <text x="527" y="455" font-size="14" font-weight="700" fill="#9a6f00">~30</text>
+
+  <!-- legend -->
+  <rect x="40" y="516" width="14" height="14" rx="3" fill="#76b900"/>
+  <text class="sub" x="62" y="528" font-size="13">замер сообщества</text>
+  <rect x="230" y="516" width="14" height="14" rx="3" fill="#e0a800"/>
+  <text class="sub" x="252" y="528" font-size="13">оценка под нашу конфигурацию</text>
+  <text class="sub" x="470" y="528" font-size="13">Prefill до 3400 ток/с (6×V100-16, Flash-Next MTP): 100k промпт ≈ 25–30 с</text>
+</svg>

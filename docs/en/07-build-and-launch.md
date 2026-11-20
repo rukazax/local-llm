@@ -62,6 +62,11 @@ system is stable and sees 256 GB.
 
 ### 2.5 Power rails: 12 V supply + Pico for the 24-pin
 
+<p align="center">
+  <img src="../../assets/power-topology.svg" alt="Схема питания: БП 12 В, Pico 24-pin, EPS, два 6+2 на вход модуля" width="100%">
+</p>
+
+
 This PSU is a mining unit: **12 V only** (166 A, ten 6+2 connectors), no 24-pin at all. A PICO-BOX
 board (DC 12 V in, ATX 24-pin out, 160 W) builds the ATX rail the motherboard needs.
 

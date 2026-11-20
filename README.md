@@ -25,6 +25,8 @@
 | [О проекте](#-о-проекте) | что это и зачем |
 | [Железо](#-железо) | конфигурация 4×V100 = 128 ГБ |
 | [Архитектура](#-архитектура) | схема системы |
+| [Как собираем](#-как-собираем) | компоновка, питание, порядок |
+| [Смета](#-смета-и-что-почём) | сколько это стоит |
 | [Движки](#-движки) | на чём и как гоняем модели |
 | [Модели](#-модели) | сводка + полная база |
 | [Скорости](#-скорости) | замеры и оценки |
@@ -63,7 +65,7 @@
 | CPU | **2× Xeon E5-2695 v4** — 18C/36T, 120 Вт | 36 ядер под CPU-часть гибрида |
 | Материнская плата | **Atermiter X99 Dual X99** (ZX-DU99D4), E-ATX, C612 | 8× DDR4 DIMM, 2× M.2, два x16 |
 | Охлаждение | радиаторы/водоблоки + сильный продув | воздух не тянет 4×300 Вт в закрытом корпусе |
-| Питание | простой ~250 Вт · нагрузка 900–1100 Вт · пик **1400 Вт** | БП 1600 Вт, отдельная линия |
+| Питание | **12 В-БП «2000 Вт» (12V/166A) + Pico 160 Вт на 24-pin** | простой ~250 Вт · нагрузка 900–1100 Вт · пик **1400 Вт** |
 | RAM хоста | **256 ГБ** DDR4-2400 REG ECC, 8×32 (RDIMM 2Rx4) | второй tier: эксперты MoE в RAM (см. 06); 76,8 ГБ/с на сокет |
 | Диск | NVMe 4–8 ГБ/с | скорость загрузки моделей |
 | ОС | Ubuntu 24.04+, UEFI, Above 4G Decoding, Re-Size BAR | обязательные пункты BIOS |
@@ -87,6 +89,66 @@ flowchart LR
     MODELS[База моделей:\nобычные · abliterated · derestricted] --> ENG1
     MODELS --> ENG2
 ```
+
+---
+
+## 🛠 Как собираем
+
+Порядок такой, что каждый шаг проверяем до следующего: плата без модуля, потом питание, только потом GPU.
+
+<p align="center">
+  <img src="assets/chassis-layout.svg" alt="Компоновка: плата, модуль 4×V100, БП, Pico, продув" width="100%">
+</p>
+
+1. **Платформа на столе.** CPU в сокеты по метке-треугольнику, кулер **Square ILM** крест-накрест,
+   потом 8 планок RAM — сначала все 4 канала CPU1, затем CPU2. Смесь рангов = «не стартует».
+2. **Первый старт без модуля.** Плата, два CPU, 256 ГБ: UEFI видит всё, память на 2400, Above 4G
+   Decoding включён, Node Interleaving выключен.
+3. **Питание.** 24-pin — с Pico, 2× EPS — с БП через переходники `6+2 → EPS`. Напряжения проверяем
+   тестером до включения: 12 / 5 / 3.3 В ±5%.
+4. **Модуль.** В верхний x16 на стороне CPU1, подпорка под текстолит, четыре 6+2 — **по два на каждый
+   вход**. Без подпора 40-сантиметровая плата выворачивает слот.
+5. **ОС и драйвер.** Ubuntu 24.04, драйвер **580.x** (последний для Volta), CUDA 12.8.
+   `nvidia-smi topo -m` должен показать `NV4`/`NV6`, `nvlink -e` — нули.
+6. **Приёмка.** `gpu-burn 300`: ≤85 °C, частоты не проваливаются, счётчики ECC пустые.
+
+Питание — самая неочевидная часть, потому что БП здесь майнинговый (только 12 В):
+
+<p align="center">
+  <img src="assets/power-topology.svg" alt="Схема питания: БП 12 В, Pico на 24-pin, EPS на CPU, два 6+2 на каждый вход модуля" width="100%">
+</p>
+
+Команды, критерии приёмки и таблица «что делать, если» на 9 симптомов —
+[docs/ru/07-build-and-launch.md](docs/ru/07-build-and-launch.md).
+
+---
+
+## 💰 Смета и что почём
+
+Цены — фактические по купленным лотам и вилки по оставшимся (ноябрь 2026, Авито / Ozon / ЯМ).
+
+| Позиция | Что именно | Цена | Статус |
+|---|---|---|---|
+| Модуль **4× V100 SXM2 32GB** + NVLink | б/у, проверен продавцом (70 ток/с одиночно, 841 батч) | 390 000 ₽ | куплено |
+| Корпус под модуль | взят вместе с модулем | 17 000 ₽ | куплено |
+| Материнская плата | Atermiter X99 Dual X99 (ZX-DU99D4), E-ATX | 4 000–9 199 ₽ | докуплено |
+| CPU ×2 | Xeon E5-2695 v4, 18C/36T, 120 Вт | 1 207–1 800 ₽/шт | докуплено |
+| NVMe 2 ТБ | под систему и модели | 30 253 ₽ | куплено |
+| БП + Pico | «2000 Вт» 12 В + 2× PICO-BOX 160 Вт | 4 464 ₽ | куплено |
+| **RAM 256 ГБ** | 8× 32 ГБ DDR4-2400 REG ECC 2Rx4 | 12 006–14 000 ₽/шт → **96–112 тыс.** | купить |
+| Кулеры ×2 | LGA2011-3 Square ILM | 1 500–3 000 ₽ | купить |
+| Мелочь | переходники 6+2→EPS, XT60, мастер-выключатель, паста | 2 000–3 000 ₽ | купить |
+
+**Итого под ключ: ~554–573 тыс. ₽**, из них ~455 тыс. уже потрачено.
+
+Экономика: сравнимый объём VRAM (4× V100 = 128 ГБ) в облаке по публичным тарифам — порядка
+$1–1,8 в час, то есть 0,8–1,5 млн ₽ в год при работе 24/7. Стенд отбивается за **5–9 месяцев**
+непрерывной загрузки. Работает «по вечерам» — окупаемость растягивается, зато железо остаётся
+и не зависит от тарифов и лимитов провайдера.
+
+Экономить разумно на: корпусе (стенд дешевле), кулерах (б/у серверные), диске (SATA вместо NVMe
+на старте). Неразумно — на памяти (смесь рангов), на питании (кабели и переходники) и на подпорке
+модуля.
 
 ---
 
@@ -141,6 +203,10 @@ Qwen2.5-72B Q6 (dense)                 ████████░░░░░�
 DeepSeek V4.1 Flash 2-bit (4×V100)     ███████████████░░░░░   91 ток/с (замер, expert offload)
 Prefill до 3400 ток/с на 6×V100-16 (Flash-Next MTP) — чтение 100k промпта ≈ 25–30 сек
 ```
+
+<p align="center">
+  <img src="assets/perf-chart.svg" alt="Ожидаемые скорости декода по моделям на 4×V100" width="100%">
+</p>
 
 Важные правила скорости: NVLink обязателен (без него вдвое медленнее), MTP-флаг включать всегда,
 KV-кэш в q8_0 — на Volta это ёмкость почти без потери скорости (~2%), лимит 250–300 Вт/карту
@@ -241,12 +307,32 @@ where to grow next. Built from deep research across Russian and international so
 
 4× V100 SXM2 32GB on a factory 4-module NVLink carrier (full NVLink or you lose ~half the speed)
 with a single PCIe 3.0 x16 uplink and 2× 8-pin feeding up to 1200 W; **2× Xeon E5-2695 v4**
-(18C/36T, 120 W) on an **Atermiter X99 Dual X99** (E-ATX, C612, 8 DIMMs); 1600 W PSU on a dedicated
-line (idle ~250 W, load 900–1100 W, peak ~1400 W); host RAM **256 GB** DDR4-2400 REG ECC
+(18C/36T, 120 W) on an **Atermiter X99 Dual X99** (E-ATX, C612, 8 DIMMs); a **12 V-only "2000 W"
+unit (166 A) plus a PICO-BOX 160 W board that builds the 24-pin** (idle ~250 W, load 900–1100 W,
+peak ~1400 W); host RAM **256 GB** DDR4-2400 REG ECC
 (8× 32 GB RDIMM 2Rx4, 76.8 GB/s per socket) — the second tier where MoE experts live
 (see [docs/en/06-hybrid-mode.md](docs/en/06-hybrid-mode.md)); NVMe 4–8 GB/s;
 Ubuntu 24.04 with UEFI + Above 4G Decoding + Re-Size BAR, NVIDIA **580.x** — the last Volta driver, frozen.
 Step-by-step build and launch: [docs/en/07-build-and-launch.md](docs/en/07-build-and-launch.md).
+
+### Assembly
+
+Board on the bench first: CPUs, square-ILM coolers, then all eight DIMMs (CPU1 channels before CPU2).
+Boot **without the module** and confirm 256 GB at 2400 with Above 4G Decoding on and Node Interleaving
+off. Then power: 24-pin from the Pico, 2× EPS from the 12 V unit through `6+2 → EPS` adapters, rails
+measured before the first switch-on. Only then the module into the top x16 on the CPU1 side — on a
+support, with **two 6+2 cables per input**. OS, driver 580.x, CUDA 12.8, `nvidia-smi topo -m` must show
+NV4/NV6 and `nvlink -e` zeros. Acceptance: `gpu-burn 300` at ≤85 °C.
+Diagrams: [chassis layout](assets/chassis-layout.svg) and [power topology](assets/power-topology.svg).
+
+### Budget
+
+Actual and quoted prices (Russia, Nov 2026): GPU module 4× V100 SXM2 32GB + NVLink 390 000 RUB
+(+17 000 case), board 4 000–9 200, 2× E5-2695 v4 1 200–1 800 each, NVMe 2 TB 30 253,
+PSU + 2× Pico 4 464, RAM 8× 32 GB DDR4-2400 RDIMM 96 000–112 000, coolers 1 500–3 000, adapters and
+sundries 2 000–3 000. **Turnkey: ~554 000–573 000 RUB**, about 455 000 already spent. The same 128 GB of
+VRAM in the cloud runs $1–1.8/h, i.e. 0.8–1.5 M RUB a year at 24/7 — the rig pays back in 5–9 months of
+continuous load and keeps working after that.
 
 ### Engines
 

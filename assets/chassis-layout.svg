@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="880" viewBox="0 0 1240 880" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="air" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2b6cb0"/>
+    </marker>
+    <style>
+      .t{fill:#101820}
+      .sub{fill:#5b6b7f}
+      .pcb{fill:#e7f0e0;stroke:#8ba876;stroke-width:2}
+      .part{fill:#f7fafc;stroke:#8fa3b8;stroke-width:1.6}
+      .heat{fill:#dfeaf6;stroke:#2b6cb0;stroke-width:1.6}
+      .air{stroke:#2b6cb0;stroke-width:2.6;fill:none;opacity:.85}
+    </style>
+  </defs>
+
+  <rect width="1240" height="880" fill="#ffffff"/>
+  <text class="t" x="40" y="50" font-size="27" font-weight="700">Компоновка: что куда ставим (вид сверху)</text>
+  <text class="sub" x="40" y="80" font-size="15">E-ATX или открытый стенд: модуль ~40 см требует места и подпора, продув — снизу вверх</text>
+
+  <!-- case -->
+  <rect x="40" y="104" width="1160" height="600" rx="16" fill="none" stroke="#b9c6d4" stroke-width="2.5" stroke-dasharray="10 8"/>
+  <text class="sub" x="62" y="130" font-size="13">Корпус / стенд</text>
+
+  <!-- motherboard -->
+  <rect class="pcb" x="72" y="150" width="640" height="520" rx="10"/>
+  <text class="t" x="92" y="178" font-size="16" font-weight="600">Atermiter X99 Dual X99 (E-ATX, C612)</text>
+
+  <!-- CPU1 -->
+  <rect class="heat" x="110" y="210" width="150" height="150" rx="8"/>
+  <text class="t" x="185" y="280" font-size="15" font-weight="700" text-anchor="middle">CPU1</text>
+  <text class="sub" x="185" y="302" font-size="12" text-anchor="middle">E5-2695 v4</text>
+  <text class="sub" x="185" y="320" font-size="12" text-anchor="middle">Square ILM</text>
+
+  <!-- CPU2 -->
+  <rect class="heat" x="380" y="210" width="150" height="150" rx="8"/>
+  <text class="t" x="455" y="280" font-size="15" font-weight="700" text-anchor="middle">CPU2</text>
+  <text class="sub" x="455" y="302" font-size="12" text-anchor="middle">E5-2695 v4</text>
+  <text class="sub" x="455" y="320" font-size="12" text-anchor="middle">Square ILM</text>
+
+  <!-- DIMMs -->
+  <g fill="#c9d8e8" stroke="#7d93a8" stroke-width="1.2">
+    <rect x="88" y="220" width="14" height="130" rx="3"/><rect x="268" y="220" width="14" height="130" rx="3"/>
+    <rect x="358" y="220" width="14" height="130" rx="3"/><rect x="538" y="220" width="14" height="130" rx="3"/>
+    <rect x="88" y="390" width="130" height="14" rx="3"/><rect x="88" y="414" width="130" height="14" rx="3"/>
+    <rect x="358" y="390" width="130" height="14" rx="3"/><rect x="358" y="414" width="130" height="14" rx="3"/>
+  </g>
+  <text class="sub" x="92" y="480" font-size="12">8× DDR4 RDIMM 2Rx4 · 256 ГБ · 1 планка на канал</text>
+
+  <!-- PCIe slot + module -->
+  <rect x="110" y="520" width="230" height="20" rx="4" fill="#f2e6c9" stroke="#b08a3e" stroke-width="1.6"/>
+  <text class="sub" x="225" y="535" font-size="12" text-anchor="middle">PCIe x16 (CPU1)</text>
+
+  <!-- M.2 -->
+  <rect class="part" x="480" y="562" width="120" height="20" rx="4"/>
+  <text class="sub" x="540" y="600" font-size="12" text-anchor="middle">M.2 NVMe</text>
+
+  <!-- module -->
+  <rect x="740" y="190" width="170" height="470" rx="12" fill="#f3f8ea" stroke="#76b900" stroke-width="2.5"/>
+  <text class="t" x="825" y="232" font-size="16" font-weight="700" text-anchor="middle">Модуль</text>
+  <text class="t" x="825" y="256" font-size="16" font-weight="700" text-anchor="middle">4× V100 SXM2</text>
+  <text class="sub" x="825" y="282" font-size="12" text-anchor="middle">полный NVLink</text>
+  <text class="sub" x="825" y="300" font-size="12" text-anchor="middle">PEX8749</text>
+  <g fill="#dfeaf6" stroke="#2b6cb0" stroke-width="1.4">
+    <rect x="770" y="330" width="110" height="58" rx="6"/>
+    <rect x="770" y="400" width="110" height="58" rx="6"/>
+    <rect x="770" y="470" width="110" height="58" rx="6"/>
+    <rect x="770" y="540" width="110" height="58" rx="6"/>
+  </g>
+  <text class="sub" x="825" y="365" font-size="11" text-anchor="middle">V100 #1</text>
+  <text class="sub" x="825" y="435" font-size="11" text-anchor="middle">V100 #2</text>
+  <text class="sub" x="825" y="505" font-size="11" text-anchor="middle">V100 #3</text>
+  <text class="sub" x="825" y="575" font-size="11" text-anchor="middle">V100 #4</text>
+  <text class="sub" x="825" y="640" font-size="12" text-anchor="middle">~40 см · подпереть</text>
+
+  <!-- link slot->module -->
+  <line x1="344" y1="530" x2="736" y2="530" stroke="#b08a3e" stroke-width="3" stroke-dasharray="8 6"/>
+  <text class="sub" x="540" y="518" font-size="12" text-anchor="middle">один PCIe 3.0 x16</text>
+
+  <!-- PSU + Pico -->
+  <rect class="part" x="940" y="160" width="236" height="180" rx="12"/>
+  <text class="t" x="1058" y="194" font-size="16" font-weight="600" text-anchor="middle">БП 12 В / 2000 Вт</text>
+  <text class="sub" x="1058" y="218" font-size="12" text-anchor="middle">10× 6+2 · 24×11×6 см</text>
+  <text class="sub" x="1058" y="240" font-size="12" text-anchor="middle">продув обязателен</text>
+  <text class="sub" x="1058" y="262" font-size="12" text-anchor="middle">мастер-выключатель</text>
+  <text class="sub" x="1058" y="284" font-size="12" text-anchor="middle">220 В, без PS_ON</text>
+
+  <rect class="part" x="940" y="372" width="140" height="76" rx="10"/>
+  <text class="t" x="1010" y="402" font-size="14" font-weight="600" text-anchor="middle">Pico 160 Вт</text>
+  <text class="sub" x="1010" y="424" font-size="12" text-anchor="middle">24-pin → плата</text>
+  <text class="sub" x="1010" y="440" font-size="11" text-anchor="middle">12 В: XT60, не бочонок</text>
+
+  <rect class="part" x="940" y="480" width="236" height="120" rx="12"/>
+  <text class="t" x="1058" y="510" font-size="14" font-weight="600" text-anchor="middle">Кабели</text>
+  <text class="sub" x="1058" y="534" font-size="12" text-anchor="middle">2× (6+2 → EPS) на CPU</text>
+  <text class="sub" x="1058" y="554" font-size="12" text-anchor="middle">4× 6+2 на модуль (по 2 на вход)</text>
+  <text class="sub" x="1058" y="576" font-size="12" text-anchor="middle">короткие, 18 AWG, без гирлянд</text>
+
+  <!-- airflow -->
+  <g class="air">
+    <line x1="120" y1="684" x2="120" y2="642" marker-end="url(#air)"/>
+    <line x1="420" y1="684" x2="420" y2="642" marker-end="url(#air)"/>
+    <line x1="825" y1="684" x2="825" y2="642" marker-end="url(#air)"/>
+  </g>
+  <text class="sub" x="120" y="730" font-size="12" text-anchor="middle">3× 140 мм на вдув</text>
+  <text class="sub" x="420" y="730" font-size="12" text-anchor="middle">продув VRM и RAM</text>
+  <text class="sub" x="825" y="730" font-size="12" text-anchor="middle">4× 300 Вт — выдув сверху</text>
+
+  <rect x="40" y="756" width="1160" height="96" rx="12" fill="#f7fafc" stroke="#cfd8e3"/>
+  <text class="t" x="64" y="788" font-size="15" font-weight="600">Что учесть по месту</text>
+  <text class="sub" x="64" y="812" font-size="13">Минимум: модуль ~40 см + 30 см кабелей + 5 см на поток воздуха вокруг радиаторов.</text>
+  <text class="sub" x="64" y="834" font-size="13">Модуль тяжелее слота: подпорка/стойка снимает изгиб текстолита и потерю контакта.</text>
+</svg>
