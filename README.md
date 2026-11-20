@@ -35,7 +35,7 @@
 | [Источники](#-источники) | откуда данные |
 
 **Документы базы знаний:**
-[Железо](docs/ru/01-hardware.md) · [Роадмап](docs/ru/02-roadmap.md) · [Движки](docs/ru/03-engines.md) · [Модели](docs/ru/04-models.md) · [Исследования](docs/ru/05-research.md) — и зеркала на английском в [docs/en](docs/en/).
+[Железо](docs/ru/01-hardware.md) · [Роадмап](docs/ru/02-roadmap.md) · [Движки](docs/ru/03-engines.md) · [Модели](docs/ru/04-models.md) · [Исследования](docs/ru/05-research.md) · [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md) — и зеркала на английском в [docs/en](docs/en/).
 
 ---
 
@@ -61,7 +61,7 @@
 | Связь с хостом | PCIe 3.0 x16 → адаптеры SFF-8654/8664 | NVLink делает GPU↔GPU, хосту хватает x8 |
 | Охлаждение | СЖО: водоблоки + 360×45 + 240×30 | воздух не тянет 4×300 Вт |
 | Питание | простой ~200 Вт · нагрузка 700–800 Вт · пик **1350 Вт** | БП 2 кВт, отдельная линия |
-| RAM хоста | 64 → 128 ГБ (план) | 1Cat-LLM ест ~62 ГБ host RAM |
+| RAM хоста | **256 ГБ** DDR4-2400 RDIMM, 8×32, два сокета | второй tier: эксперты MoE в RAM (см. 06) |
 | Диск | NVMe 4–8 ГБ/с | скорость загрузки моделей |
 | ОС | Ubuntu 24.04+, UEFI, Above 4G Decoding, Resizable BAR | обязательные пункты BIOS |
 | Драйвер | NVIDIA **580.x** — последний с поддержкой Volta | зафиксировать, не гнаться за новыми |
@@ -79,7 +79,7 @@ flowchart LR
     API --> ENG2[1Cat-LLM v1.5.3\nNVFP4 + MTP4 / DFlash2]
     ENG1 --> GPU0[4× V100 SXM2 32GB\nTP4 · NVLink 300 ГБ/с]
     ENG2 --> GPU0
-    GPU0 --> RAM[(host RAM 64–128 ГБ\nэксперты MoE · KV offload)]
+    GPU0 --> RAM[(host RAM 256 ГБ\nэксперты MoE · KV offload)]
     MODELS[База моделей:\nобычные · abliterated · derestricted] --> ENG1
     MODELS --> ENG2
 ```
@@ -191,8 +191,9 @@ gantt
 4. **Uncensored-модели почти ничего не стоят по качеству** (Heretic-метод измерим и аккуратен),
    но их надо изолировать от инструментов с доступом к системе — принцип «модель без отказов +
    доступ к шеллу = риск».
-5. **RAM и драйвер — два тихих ограничителя**: 62 ГБ host RAM у эталонного стенда 1Cat;
-   драйвер 580 — последний. Апгрейд RAM и фиксация стека — обязательные этапы, не опции.
+5. **RAM — это второй tier, а не апгрейд «на вырост»**: 256 ГБ DDR4-2400 (8 каналов) дают
+   MoE со 100+ млрд общих параметров ~5–15 ток/с; dense-модели в RAM не гоняем. Драйвер 580 —
+   последний для Volta, стек фиксируем. Подробно — [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md).
 6. **Никакой локальный 27–120B не тягается с облачными флагманами в сложной агентике** —
    но для приватных задач, кода, RAG, зрения и креатива он даёт скорость и контроль,
    которых облако не даст.
@@ -208,6 +209,7 @@ gantt
 | [Движки](docs/ru/03-engines.md) | [Engines](docs/en/03-engines.md) |
 | [База моделей](docs/ru/04-models.md) | [Models database](docs/en/04-models.md) |
 | [Исследования](docs/ru/05-research.md) | [Research](docs/en/05-research.md) |
+| [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md) | [Hybrid mode](docs/en/06-hybrid-mode.md) |
 
 ## 📖 Источники
 
@@ -234,7 +236,8 @@ where to grow next. Built from deep research across Russian and international so
 
 4× V100 SXM2 32GB on a 4-slot NVLink carrier (full NVLink or you lose ~half the speed), watercooled
 (360×45 + 240×30 radiators), 2 kW PSU on a dedicated line (idle ~200 W, load 700–800 W, peak 1350 W),
-host RAM 64→128 GB (the reference 1Cat-LLM rig consumes ~62 GB of host RAM), NVMe 4–8 GB/s,
+host RAM **256 GB** DDR4-2400 RDIMM across two sockets — the second tier where MoE experts live
+(see [docs/en/06-hybrid-mode.md](docs/en/06-hybrid-mode.md)), NVMe 4–8 GB/s,
 Ubuntu 24.04 with UEFI + Above 4G Decoding + Resizable BAR, NVIDIA **580.x** — the last Volta driver, frozen.
 
 ### Engines
@@ -262,7 +265,7 @@ Full database with skills, speeds and trust levels: [docs/en/04-models.md](docs/
 
 Lots check → bench assembly (SXM2 seating, leak test) → OS/BIOS/driver/CUDA → acceptance
 (4 GPUs, NVLink links, ECC counters) → llama.cpp + GGUF queue → 1Cat-LLM + NVFP4 + benchmarks →
-API/UI + NAS integration → models in production + monitoring → upgrades (RAM 128 GB, NVMe, optional
+API/UI + NAS integration → models in production + monitoring → upgrades (second socket + 256 GB RAM, NVMe, optional
 2-card “instance B”). Details: [docs/en/02-roadmap.md](docs/en/02-roadmap.md).
 
 ### Directions
@@ -278,7 +281,9 @@ fine-tuning your own models (LoRA/QLoRA on 27–70B), multi-instance serving.
 3. MTP speculation is the main free speedup — always on.
 4. Uncensored models cost almost nothing in quality (Heretic is measurable), but keep them away from
    system-level tools: no-refusal model + shell access = risk.
-5. RAM and the driver are the two quiet limiters — upgrade RAM and freeze the stack.
+5. RAM is a second tier, not a rainy-day upgrade: 256 GB DDR4-2400 (8 channels) runs MoE with
+   100B+ total parameters at ~5–15 tok/s; dense models stay out of RAM. Driver 580 is the last for
+   Volta — freeze the stack. Details: [docs/en/06-hybrid-mode.md](docs/en/06-hybrid-mode.md).
 6. No local 27–120B beats cloud flagships at hard agentic work — but for private tasks, code, RAG,
    vision and creativity it gives speed and control the cloud cannot.
 

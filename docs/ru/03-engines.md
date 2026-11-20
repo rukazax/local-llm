@@ -9,6 +9,7 @@
 | Стек | Volta | Роль в проекте |
 |---|---|---|
 | **llama.cpp** | ✅ основа | все GGUF: MoE, dense, VL, embeddings; TP4/послойный split |
+| **ik_llama.cpp** | ✅ форк | лучший CPU/CUDA-гибрид: MoE-оффлоад в RAM на 10–30% быстрее mainline — см. [гибрид](06-hybrid-mode.md) |
 | **1Cat-LLM** (экс 1Cat-vLLM) | ✅ флагман | NVFP4/MXFP4, AWQ, FP8-KV, GGUF (новое), MTP4/DFlash2, FlashQLA/GDN |
 | **llamacpp-v100** (anyei) | ✅ форк | MoE-эксперт-кэш (+23–38%), MLA tensor-режим, q8_0-KV без потерь |
 | **llama.cpp-v100** (wangxso / 1115714829) | ✅ форк | Flash-Next на 2–6 GPU: prefill 3402 ток/с @200K на 6×16GB; DFlash2 декод до 220 ток/с; web UI |

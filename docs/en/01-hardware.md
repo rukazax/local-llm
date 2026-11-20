@@ -11,7 +11,7 @@
 | Host link | PCIe 3.0 x16 → 2× SFF-8654/8664 adapters + cables | x8 per GPU is enough; GPU↔GPU traffic rides NVLink |
 | Cooling | waterblocks + 360×45 + 240×30 radiators | air cannot handle 4×300 W; a block dissipates ~300 W per card |
 | PSU | 2 kW, dedicated line | idle ~200 W · load 700–800 W · peak 1350 W |
-| RAM | 64 → **128 GB** (planned) | the 1Cat-LLM reference rig consumes ~62 GB host RAM; Flash Next 125B needs 96+ |
+| RAM | **256 GB** DDR4-2400 RDIMM (8×32, two sockets, 8 channels) | the second tier — MoE experts live in RAM, see [hybrid mode](06-hybrid-mode.md); the 1Cat-LLM reference rig consumes ~62 GB host RAM |
 | Disk | NVMe 4–8 GB/s | model checkpoints are 20–90 GB |
 | OS | Ubuntu 24.04+ | glibc ≥ 2.38, GLIBCXX ≥ 3.4.30 |
 
