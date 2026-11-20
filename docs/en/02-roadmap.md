@@ -48,7 +48,8 @@ agents (code → Coder-30B, agentics → GLM-Air, vision → VL-30B).
 **S7 — Operations.** Monitor temps/ECC/watts; the download schedule (01:30–19:00) is already in cron;
 every new model goes through llama-bench into the models database.
 
-**S8 — Upgrades.** RAM 64→128 GB first (unlocks Flash Next); NVMe as needed; an optional 2-card
+**S8 — Upgrades.** Second socket + 256 GB RAM first (unlocks Flash Next and hybrid tier 2,
+see [06](06-hybrid-mode.md)); NVMe as needed; an optional 2-card
 “instance B” when parallel workloads appear; a 192–256 GB platform only when 128 GB is truly not enough.
 
 ---
