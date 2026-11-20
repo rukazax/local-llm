@@ -32,8 +32,8 @@ Acceptance: 4 modules visible in lspci, no leaks.
 Python 3.12 + uv. Acceptance: `nvidia-smi -L` lists 4 GPUs.
 
 **S3 — Hardware acceptance.** Run the acceptance script: 4 GPUs, `nvidia-smi nvlink -s` active
-links, topo -m; 30-min stress → ECC counters still zero; wall-power 700–800 W at a 250 W/card cap;
-temps < 60°C.
+links, topo -m; 30-min stress → ECC counters still zero; wall-power 900–1100 W at a 250 W/card cap;
+temps < 85 °C. Full checklist: [07-build-and-launch](07-build-and-launch.md).
 
 **S4 — llama.cpp.** Build with `GGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=70`; serve GGUF with
 `-ngl all --tensor-split 1,1,1,1 -fa on -ctk q8_0 -ctv q8_0`. Tune in order: offload → quant →

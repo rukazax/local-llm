@@ -6,19 +6,34 @@
 
 | Component | Choice | Why |
 |---|---|---|
-| GPU | **4× Tesla V100 SXM2 32GB** | 128 GB HBM2, homogeneous; TP4 without compromise in any engine |
-| Carrier | 4-module SXM2 base with **full NVLink** | NVLink 300 GB/s GPU↔GPU; without it — ~half the speed (57 vs ~100 tok/s measured) |
-| Host link | PCIe 3.0 x16 → 2× SFF-8654/8664 adapters + cables | x8 per GPU is enough; GPU↔GPU traffic rides NVLink |
-| Cooling | waterblocks + 360×45 + 240×30 radiators | air cannot handle 4×300 W; a block dissipates ~300 W per card |
-| PSU | 2 kW, dedicated line | idle ~200 W · load 700–800 W · peak 1350 W |
-| RAM | **256 GB** DDR4-2400 RDIMM (8×32, two sockets, 8 channels) | the second tier — MoE experts live in RAM, see [hybrid mode](06-hybrid-mode.md); the 1Cat-LLM reference rig consumes ~62 GB host RAM |
+| GPU | **4× Tesla V100 SXM2 32GB** on one carrier board | 128 GB HBM2, homogeneous; TP4 without compromise |
+| Carrier | factory 4×SXM2 module with **full NVLink**, Broadcom PEX8749 switch | NVLink 300 GB/s GPU↔GPU; **one PCIe 3.0 x16** uplink, **2× 8-pin up to 1200 W**. Without NVLink — ~half the speed (57 vs ~100 tok/s measured) |
+| CPU | **2× Intel Xeon E5-2695 v4** — 18C/36T, 2.1–3.3 GHz, 45 MB L3, 120 W, 40 PCIe 3.0 lanes | 36 physical cores for the CPU side of the hybrid and for services; DDR4-2400 controller |
+| Motherboard | **Atermiter X99 Dual X99** (ZX-DU99D4 family), E-ATX, C612, 2× LGA2011-3 | 8× DDR4 DIMM = 256 GB, 2× M.2 NVMe, two full-size x16 |
+| Cooling | heatsinks/waterblocks + strong case airflow | air cannot handle 4×300 W in a closed box |
+| PSU | **1600 W**, dedicated line; the module on 2× 8-pin from separate rails | idle ~250 W (V100 never power-saves, ~42 W/card) · load 900–1100 W · peak ~1400 W while a model loads |
+| RAM | **256 GB = 8× 32 GB DDR4-2400 REG ECC (RDIMM 2Rx4)** | the second tier — MoE experts live in RAM, see [hybrid mode](06-hybrid-mode.md); 1 DIMM per channel, **76.8 GB/s per socket** |
 | Disk | NVMe 4–8 GB/s | model checkpoints are 20–90 GB |
 | OS | Ubuntu 24.04+ | glibc ≥ 2.38, GLIBCXX ≥ 3.4.30 |
 
+### Platform memory ceiling
+
+- The E5 v4 controller officially supports **up to 1.5 TB** (with 128 GB 3DS LRDIMMs),
+  DDR4-1600/1866/2133/**2400**, 4 channels, 76.8 GB/s per socket
+  ([Intel ARK](https://www.intel.com/content/www/us/en/products/sku/91316/intel-xeon-processor-e52695-v4-45m-cache-2-10-ghz/specifications.html)).
+- The limit is set by **the board and its BIOS**: 8 slots × **32 GB** = **256 GB**. It does not bring
+  up LRDIMM/3DS, so 32 GB per slot is the practical maximum.
+- 2666/2933/3200 modules are not "incompatible" — they downclock to 2400 by JEDEC. Paying above
+  2400 buys nothing here.
+
 ## BIOS/UEFI checklist
 
-UEFI boot (CSM off) · **Above 4G Decoding** (cards invisible without it) · **Resizable BAR** ·
-bifurcation x8/x8 for a single-slot setup.
+UEFI boot (CSM off) · **Above 4G Decoding** (cards invisible without it) · **Re-Size BAR**
+(disable and retest P2P if the board misbehaves) · IOMMU on (off if P2P breaks) ·
+**Node Interleaving Disabled** (otherwise two-socket NUMA locality is lost) · memory 2400 ·
+Restore on AC loss · Secure Boot off · fans Performance.
+
+Full walkthrough from unboxing to the first token — [07-build-and-launch](07-build-and-launch.md).
 
 ## Assembly gotchas
 

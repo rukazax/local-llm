@@ -10,7 +10,7 @@ Two new inputs reshaped the plan:
 
 - **One 4-slot V100 SXM2 carrier with full NVLink** — 128 GB VRAM as a single homogeneous TP4 pool.
 - **The model must be able to use CPU+RAM, not just VRAM** — for the models that do not fit in 128 GB.
-- Target host: 2× Xeon E5-2680v4 (28 threads) + 8×32 GB DDR4-2400 RDIMM = **256 GB**, eight channels.
+- Target host: **2× Xeon E5-2695 v4 (36 threads)** on Atermiter X99 Dual + 8×32 GB DDR4-2400 RDIMM = **256 GB**, eight channels.
 
 ## The main conclusion
 
@@ -32,7 +32,7 @@ Two mechanisms in llama.cpp / ik_llama.cpp, both about MoE:
 2. `-ot 'exps=CPU'` — all experts in RAM, attention on the GPU. Simpler and more predictable, but slower.
 
 Obligatory companions: `--no-mmap` (otherwise the page cache on 256 GB of RAM thrashes on 200+ GB
-models), `-t 28` (not 56 — extra threads hurt across two sockets), `--numa distribute`,
+models), `-t 36` (not 72 — extra threads hurt across two sockets), `--numa distribute`,
 KV cache as `-ctk q8_0 -ctv q8_0`.
 
 ## The ceiling arithmetic (why it is slow, and how slow)
@@ -53,7 +53,7 @@ parameters. Anything denser stays in VRAM at a more aggressive quant.
 |---|---|
 | Q4 speeds up compute | No: SM70 has no INT4/BF16/FP8 tensor paths — Q4 saves memory, dequant runs at FP16 |
 | NVFP4 gives native acceleration | Software emulation; the gain comes from MTP and batching only |
-| More CPU threads is faster | No: 28 threads is the optimum, 56 falls off a cliff on NUMA |
+| More CPU threads is faster | No: 36 threads is the optimum; 72 falls off a cliff on NUMA |
 | Any new engine will do | Ollama and upstream vLLM dropped Volta; PyTorch builds are winding down |
 
 The real accelerators on this board: **MTP speculation (+33–39%)**, batching, `-sm row` with live NVLink,

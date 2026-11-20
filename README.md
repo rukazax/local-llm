@@ -29,13 +29,14 @@
 | [Модели](#-модели) | сводка + полная база |
 | [Скорости](#-скорости) | замеры и оценки |
 | [Роадмап](#-роадмап-сборки-и-настройки) | этапы сборки и настройки |
+| [Сборка и запуск](docs/ru/07-build-and-launch.md) | пошаговый мануал до первого токена |
 | [Перспективы](#-перспективы-и-направления) | где это применять |
 | [Выводы](#-выводы) | главное по итогам исследований |
 | [Документация](#-документация) | RU/EN файлы базы знаний |
 | [Источники](#-источники) | откуда данные |
 
 **Документы базы знаний:**
-[Железо](docs/ru/01-hardware.md) · [Роадмап](docs/ru/02-roadmap.md) · [Движки](docs/ru/03-engines.md) · [Модели](docs/ru/04-models.md) · [Исследования](docs/ru/05-research.md) · [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md) — и зеркала на английском в [docs/en](docs/en/).
+[Железо](docs/ru/01-hardware.md) · [Роадмап](docs/ru/02-roadmap.md) · [Движки](docs/ru/03-engines.md) · [Модели](docs/ru/04-models.md) · [Исследования](docs/ru/05-research.md) · [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md) · [Сборка и запуск](docs/ru/07-build-and-launch.md) — и зеркала на английском в [docs/en](docs/en/).
 
 ---
 
@@ -55,18 +56,21 @@
 
 | Компонент | Конфигурация | Примечание |
 |---|---|---|
-| GPU | **4× Tesla V100 SXM2 32GB** | Volta, SM70, тензор-ядра FP16, HBM2 |
-| Несущая плата | SXM2-база на 4 модуля + **полный NVLink** | без NVLink скорость падает ~вдвое |
+| GPU | **4× Tesla V100 SXM2 32GB** на одной несущей плате | Volta, SM70, тензор-ядра FP16, HBM2 |
+| Несущая плата | заводской модуль 4×SXM2 + **полный NVLink**, PEX8749 | без NVLink скорость падает ~вдвое |
 | Итого VRAM | **128 ГБ HBM2** | однородная конфигурация, TP4 без компромиссов |
-| Связь с хостом | PCIe 3.0 x16 → адаптеры SFF-8654/8664 | NVLink делает GPU↔GPU, хосту хватает x8 |
-| Охлаждение | СЖО: водоблоки + 360×45 + 240×30 | воздух не тянет 4×300 Вт |
-| Питание | простой ~200 Вт · нагрузка 700–800 Вт · пик **1350 Вт** | БП 2 кВт, отдельная линия |
-| RAM хоста | **256 ГБ** DDR4-2400 RDIMM, 8×32, два сокета | второй tier: эксперты MoE в RAM (см. 06) |
+| Связь с хостом | **один PCIe 3.0 x16**, питание 2×8-pin до 1200 Вт | NVLink делает GPU↔GPU, хосту хватает одного слота |
+| CPU | **2× Xeon E5-2695 v4** — 18C/36T, 120 Вт | 36 ядер под CPU-часть гибрида |
+| Материнская плата | **Atermiter X99 Dual X99** (ZX-DU99D4), E-ATX, C612 | 8× DDR4 DIMM, 2× M.2, два x16 |
+| Охлаждение | радиаторы/водоблоки + сильный продув | воздух не тянет 4×300 Вт в закрытом корпусе |
+| Питание | простой ~250 Вт · нагрузка 900–1100 Вт · пик **1400 Вт** | БП 1600 Вт, отдельная линия |
+| RAM хоста | **256 ГБ** DDR4-2400 REG ECC, 8×32 (RDIMM 2Rx4) | второй tier: эксперты MoE в RAM (см. 06); 76,8 ГБ/с на сокет |
 | Диск | NVMe 4–8 ГБ/с | скорость загрузки моделей |
-| ОС | Ubuntu 24.04+, UEFI, Above 4G Decoding, Resizable BAR | обязательные пункты BIOS |
+| ОС | Ubuntu 24.04+, UEFI, Above 4G Decoding, Re-Size BAR | обязательные пункты BIOS |
 | Драйвер | NVIDIA **580.x** — последний с поддержкой Volta | зафиксировать, не гнаться за новыми |
 
-Подробно — в [docs/ru/01-hardware.md](docs/ru/01-hardware.md).
+Подробно — в [docs/ru/01-hardware.md](docs/ru/01-hardware.md), пошаговая сборка и запуск —
+в [docs/ru/07-build-and-launch.md](docs/ru/07-build-and-launch.md).
 
 ---
 
@@ -210,6 +214,7 @@ gantt
 | [База моделей](docs/ru/04-models.md) | [Models database](docs/en/04-models.md) |
 | [Исследования](docs/ru/05-research.md) | [Research](docs/en/05-research.md) |
 | [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md) | [Hybrid mode](docs/en/06-hybrid-mode.md) |
+| [Сборка и запуск](docs/ru/07-build-and-launch.md) | [Build & launch](docs/en/07-build-and-launch.md) |
 
 ## 📖 Источники
 
@@ -234,11 +239,14 @@ where to grow next. Built from deep research across Russian and international so
 
 ### Hardware
 
-4× V100 SXM2 32GB on a 4-slot NVLink carrier (full NVLink or you lose ~half the speed), watercooled
-(360×45 + 240×30 radiators), 2 kW PSU on a dedicated line (idle ~200 W, load 700–800 W, peak 1350 W),
-host RAM **256 GB** DDR4-2400 RDIMM across two sockets — the second tier where MoE experts live
-(see [docs/en/06-hybrid-mode.md](docs/en/06-hybrid-mode.md)), NVMe 4–8 GB/s,
-Ubuntu 24.04 with UEFI + Above 4G Decoding + Resizable BAR, NVIDIA **580.x** — the last Volta driver, frozen.
+4× V100 SXM2 32GB on a factory 4-module NVLink carrier (full NVLink or you lose ~half the speed)
+with a single PCIe 3.0 x16 uplink and 2× 8-pin feeding up to 1200 W; **2× Xeon E5-2695 v4**
+(18C/36T, 120 W) on an **Atermiter X99 Dual X99** (E-ATX, C612, 8 DIMMs); 1600 W PSU on a dedicated
+line (idle ~250 W, load 900–1100 W, peak ~1400 W); host RAM **256 GB** DDR4-2400 REG ECC
+(8× 32 GB RDIMM 2Rx4, 76.8 GB/s per socket) — the second tier where MoE experts live
+(see [docs/en/06-hybrid-mode.md](docs/en/06-hybrid-mode.md)); NVMe 4–8 GB/s;
+Ubuntu 24.04 with UEFI + Above 4G Decoding + Re-Size BAR, NVIDIA **580.x** — the last Volta driver, frozen.
+Step-by-step build and launch: [docs/en/07-build-and-launch.md](docs/en/07-build-and-launch.md).
 
 ### Engines
 
