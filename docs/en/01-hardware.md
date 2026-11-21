@@ -7,7 +7,7 @@
 | Component | Choice | Why |
 |---|---|---|
 | GPU | **4× Tesla V100 SXM2 32GB** on one carrier board | 128 GB HBM2, homogeneous; TP4 without compromise |
-| Carrier | factory 4×SXM2 module with **full NVLink**, Broadcom PEX8749 switch | NVLink 300 GB/s GPU↔GPU; **one PCIe 3.0 x16** uplink, **2× 8-pin up to 1200 W**. Without NVLink — ~half the speed (57 vs ~100 tok/s measured) |
+| Carrier | factory 4×SXM2 module with **full NVLink**, Broadcom PEX8748 switch | NVLink 300 GB/s GPU↔GPU; **one PCIe 3.0 x16** uplink, **2× 8-pin up to 1200 W**. Without NVLink — ~half the speed (57 vs ~100 tok/s measured) |
 | CPU | **2× Intel Xeon E5-2695 v4** — 18C/36T, 2.1–3.3 GHz, 45 MB L3, 120 W, 40 PCIe 3.0 lanes | 36 physical cores for the CPU side of the hybrid and for services; DDR4-2400 controller |
 | Motherboard | **Atermiter X99 Dual X99** (ZX-DU99D4 family), E-ATX, C612, 2× LGA2011-3 | 8× DDR4 DIMM = 256 GB, 2× M.2 NVMe, two full-size x16 |
 | Cooling | heatsinks/waterblocks + strong case airflow | air cannot handle 4×300 W in a closed box |
@@ -48,7 +48,7 @@ Full walkthrough from unboxing to the first token — [07-build-and-launch](07-b
 ## Software stack
 
 NVIDIA **580.x** — the last Volta driver (freeze it, keep a tarball); CUDA 12.8 (CUDA 13 dropped
-Volta); Python 3.12 + uv; llama.cpp + SM70 forks; 1Cat-LLM v1.5.3. Details in
+Volta); Python 3.12 + uv; llama.cpp + SM70 forks; 1Cat-vLLM v1.5.4 (see [08](08-1cat-vllm-nvfp4.md)). Details in
 [03-engines](03-engines.md).
 
 ## Risks

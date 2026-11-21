@@ -124,7 +124,7 @@ not the knowledge.
 [1Cat-LLM](https://github.com/1CatAI/1Cat-vLLM), [anyei/llamacpp-v100](https://github.com/anyei/llamacpp-v100).
 
 Caveats: the tok/s figures are estimates derived from memory bandwidth, not measurements on our hardware;
-the claimed 892 tok/s aggregate for 1Cat is verifiable only by replication; prices for 4-slot NVLink
+the claimed 1139–1264 tok/s aggregate for 1Cat is verifiable only by replication; prices for 4-slot NVLink
 carriers in Russia are unconfirmed (Avito sits behind an anti-bot).
 
 ---

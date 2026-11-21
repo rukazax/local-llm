@@ -11,7 +11,7 @@ by a command is given as a command with the expected output: if the output diffe
 
 | Component | Exact part | Status |
 |---|---|---|
-| GPU | **4× Tesla V100 SXM2 32GB** on a single carrier board with full NVLink, Broadcom PEX8749 switch, **one PCIe 3.0 x16** uplink, **2× 8-pin up to 1200 W** | bought |
+| GPU | **4× Tesla V100 SXM2 32GB** on a single carrier board with full NVLink, Broadcom PEX8748 switch, **one PCIe 3.0 x16** uplink, **2× 8-pin up to 1200 W** | bought |
 | Motherboard | **Atermiter X99 Dual X99** (ZX-DU99D4 family), E-ATX, C612, 2× LGA2011-3, 8× DDR4 DIMM, 2× M.2 NVMe | bought |
 | CPU | **2× Intel Xeon E5-2695 v4** — 18C/36T, 2.1–3.3 GHz, 45 MB L3, 120 W, 40 PCIe 3.0 lanes, DDR4-2400 | bought |
 | RAM | **256 GB = 8× 32 GB DDR4-2400 REG ECC (RDIMM 2Rx4)**, 1 DIMM per channel, 76.8 GB/s per socket | to buy |

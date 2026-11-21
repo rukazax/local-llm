@@ -16,7 +16,7 @@ DIY inter-board NVLink bridges are unproven — Level1Techs.
 
 | Setup | Result |
 |---|---|
-| Qwen3.8-27B NVFP4 + MTP4, 1Cat TP4 4×32 | **892 tok/s aggregate** @8K/8 streams; 426 single; 367 @64K |
+| Qwen3.8-27B NVFP4 + DFlash2, 1Cat 1.5.4 TP4 4×32 | **1139 tok/s aggregate** @8K/8 streams; 425 single; 784 @8K/8×64K |
 | Qwen3.8-27B GGUF Q4_K_M + MTP, 1×32 | 65 tok/s @1K → 42 @128K (stock: 35.95 → 16.49) |
 | Flash-Next IQ3E+MTP, 2×32 NVLink | 122 tok/s @256K; tensor split +20% vs layer |
 | Flash-Next (6×16GB, wangxso) | prefill 3402 tok/s @200K |
@@ -30,7 +30,7 @@ DIY inter-board NVLink bridges are unproven — Level1Techs.
 
 Driver **580.x is the last** for Volta; CUDA 13 dropped Volta; test new kernels before upgrading.
 Ollama removed Volta, upstream vLLM needs CC ≥ 7.5, PyTorch builds wound down 09.2026.
-1Cat-LLM v1.5.3 (2026-11-14): GGUF support, the reference rig uses **62 GB host RAM**; Z-Image and
+1Cat-vLLM v1.5.4 (2026-11-21): Flash-Next MTP5 + DCP2, KV history in host RAM, 425/1139 tok/s on 4×V100 — [guide 08](08-1cat-vllm-nvfp4.md). Reference rig uses **62 GB host RAM**; Z-Image and
 MiniMax H3 already run on SM70.
 
 ### Uncensored ecosystem (IMC'26 paper, 16k models)

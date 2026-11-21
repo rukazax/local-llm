@@ -40,7 +40,7 @@ temps < 85 °C. Full checklist: [07-build-and-launch](07-build-and-launch.md).
 context → KV → FA → batch → speculation. Benchmark with llama-bench (PP and TG separately).
 
 **S5 — 1Cat-LLM.** Run the installer `--check`, then install; target the reference numbers:
-27B NVFP4+MTP4 **426 tok/s single @8K, 892 aggregate** (±15%). DFlash2 for code, MTP4 for prose.
+27B NVFP4 **425 tok/s single (DFlash2), 1139–1264 aggregate @8×8K** (±15%). DFlash2 for code, MTP4 for prose.
 
 **S6 — Serving layer.** OpenAI-compatible API + token auth, web UI, task routing to the NAS/DSH
 agents (code → Coder-30B, agentics → GLM-Air, vision → VL-30B).

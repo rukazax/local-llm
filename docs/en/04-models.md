@@ -12,7 +12,7 @@ hard agentics prefer these.
 
 | Model | Type | Quant · size | Speed (est/measured) | Skills & purpose | Trust |
 |---|---|---|---|---|---|
-| **Qwen3.8-27B** (official, Apache 2.0) | dense 27B, hybrid GDN+attention, MTP | UD-Q5/Q8 · 20–29 GB | ✅ 65 tok/s @1K (GGUF+MTP, one card); 426 tok/s NVFP4+MTP4 (TP4); GGUF Q8 on 4×32 ~50–70 | the new-generation universal: native vision, 256K context, code, agentics, multilingual | ★★★★★ GPQA 89.2, LiveCodeBench 90.3 — first line for critical code |
+| **Qwen3.8-27B** (official, Apache 2.0) | dense 27B, hybrid GDN+attention, MTP | UD-Q5/Q8 · 20–29 GB | ✅ 65 tok/s @1K (GGUF+MTP, one card); 425 tok/s NVFP4+DFlash2 (TP4); GGUF Q8 on 4×32 ~50–70 | the new-generation universal: native vision, 256K context, code, agentics, multilingual | ★★★★★ GPQA 89.2, LiveCodeBench 90.3 — first line for critical code |
 | **GLM-4.5-Air** (Zhipu) | MoE 110B/12B | Q5 · 83.5 GB | est 45–60 tok/s | the main agent: tool-calling, long context, planning | ★★★★★ Sonnet-class agentics |
 | **Qwen2.5-72B-Instruct** | dense 72B | Q6 · 62 GB | est 25–35 tok/s | heavy reasoning, strong Russian | ★★★★☆ |
 | **GPT-OSS-120B** (OpenAI, Apache 2.0) | MoE 120B/5.1B | Q4 · ~65 GB | est 50–70 tok/s | reasoning with adjustable effort, browser/code tools | ★★★★☆ |

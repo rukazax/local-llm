@@ -10,7 +10,7 @@
 |---|---|---|
 | **llama.cpp** | ✅ основа | все GGUF: MoE, dense, VL, embeddings; TP4/послойный split |
 | **ik_llama.cpp** | ✅ форк | лучший CPU/CUDA-гибрид: MoE-оффлоад в RAM на 10–30% быстрее mainline — см. [гибрид](06-hybrid-mode.md) |
-| **1Cat-LLM** (экс 1Cat-vLLM) | ✅ флагман | NVFP4/MXFP4, AWQ, FP8-KV, GGUF (новое), MTP4/DFlash2, FlashQLA/GDN |
+| **1Cat-vLLM** (экс 1Cat-LLM, **1.5.4**) | ✅ флагман | NVFP4/MXFP4, AWQ, FP8-KV, GGUF (новое), MTP4/MTP5/DFlash2, FlashQLA/GDN — [гайд 08](08-1cat-vllm-nvfp4.md) |
 | **llamacpp-v100** (anyei) | ✅ форк | MoE-эксперт-кэш (+23–38%), MLA tensor-режим, q8_0-KV без потерь |
 | **llama.cpp-v100** (wangxso / 1115714829) | ✅ форк | Flash-Next на 2–6 GPU: prefill 3402 ток/с @200K на 6×16GB; DFlash2 декод до 220 ток/с; web UI |
 | **jusko-llama-volta-qwen3flash** | ✅ форк | Flash-Next сервинг; фиксы FlashAttention-барьеров (PR #27955); чекпойнтинг агентских контекстов |
@@ -25,8 +25,8 @@
 - **MTP (multi-token prediction)**: голова уже внутри GGUF Unsloth (`blk.*.nextn.*`); в llama.cpp
   включается `--spec-type draft-mtp --spec-draft-n-max 3..5`. Даёт **+33–39%** декода;
   27B: 65 → 90+ ток/с на одной карте. Больше draft ≠ быстрее: max 7 уже хуже, чем max 5.
-- **DFlash2** (драфтер 7 токенов, ревизия пинится `dedf8df6`): лучше на коде; в 1Cat — 479 agg @8K.
-- **MTP4** (нативная голова в NVFP4-чекпойнте): лучше на прозе; 892 agg @8K на TP4.
+- **DFlash2** (драфтер 7 токенов, ревизия пинится `dedf8df6`): лучше на коде; в 1Cat 1.5.4 — 425 ток/с одиночный, 1139 agg @8×8K.
+- **MTP4** (нативная голова в NVFP4-чекпойнте): лучше на прозе и на длинных; 281 одиночный, 1264 agg @8×8K на TP4.
 - Приём acceptance ~70% — если ниже, спекуляция вредит; следить за метрикой.
 
 ## KV-кэш и контекст

@@ -8,7 +8,7 @@
 |---|---|---|
 | **llama.cpp** | ✅ base | all GGUF: MoE, dense, VL, embeddings; TP4/layer split |
 | **ik_llama.cpp** | ✅ fork | best CPU/CUDA hybrid: MoE offload to RAM, 10–30% faster than mainline — see [hybrid](06-hybrid-mode.md) |
-| **1Cat-LLM** (ex 1Cat-vLLM, v1.5.3) | ✅ flagship | NVFP4/MXFP4, AWQ, FP8-KV, GGUF (new), MTP4/DFlash2 |
+| **1Cat-vLLM** (ex 1Cat-LLM, **1.5.4**) | ✅ flagship | NVFP4/MXFP4, AWQ, FP8-KV, GGUF (new), MTP4/MTP5/DFlash2 — [guide 08](08-1cat-vllm-nvfp4.md) |
 | **llamacpp-v100** (anyei) | ✅ fork | MoE expert cache (+23–38%), MLA tensor mode, lossless q8_0 KV |
 | **llama.cpp-v100** (wangxso / 1115714829) | ✅ fork | Flash-Next on 2–6 GPUs: prefill 3402 tok/s @200K on 6×16GB; DFlash2 decode up to 220 tok/s |
 | **jusko-llama-volta-qwen3flash** | ✅ fork | Flash-Next serving; FlashAttention barrier fixes; agent-context checkpointing |
@@ -20,8 +20,8 @@
 
 - **MTP**: the head already ships in Unsloth GGUFs; `--spec-type draft-mtp --spec-draft-n-max 3..5`
   gives **+33–39% decode** (27B: 65 → 90+ tok/s on one card). Draft max 7 is worse than max 5.
-- **DFlash2** (7-token drafter, pinned revision `dedf8df6`): better on code — 479 agg @8K in 1Cat.
-- **MTP4** (native head in the NVFP4 checkpoint): better on prose — 892 agg @8K on TP4.
+- **DFlash2** (7-token drafter, pinned revision `dedf8df6`): better on code — 425 tok/s single, 1139 agg @8×8K on 1.5.4.
+- **MTP4** (native head in the NVFP4 checkpoint): better on prose and long context — 281 single, 1264 agg @8×8K on TP4.
 - Watch acceptance (~70%); below that, speculation hurts.
 
 ## KV cache & context

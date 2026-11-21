@@ -121,7 +121,7 @@ HITL на write/exec, никаких `~/.ssh` и `.env` в контексте. A
 [1Cat-LLM](https://github.com/1CatAI/1Cat-vLLM), [anyei/llamacpp-v100](https://github.com/anyei/llamacpp-v100).
 
 Оговорки: числа «ток/с» — оценки из полосы памяти, а не замеры на нашем железе; заявленные
-892 ток/с aggregate у 1Cat проверяются только репликацией; цены на 4-slot NVLink-платы в РФ
+1139–1264 ток/с aggregate у 1Cat проверяются только репликацией; цены на 4-slot NVLink-платы в РФ
 не подтверждены (Avito за антиботом).
 
 ---

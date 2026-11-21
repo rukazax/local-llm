@@ -25,7 +25,7 @@ gantt
 
 ## Этап 0. Комплектация и проверка лотов 📦
 
-- Куплено: модуль **4× V100 SXM2 32GB** с полным NVLink на одной несущей плате (PEX8749, один
+- Куплено: модуль **4× V100 SXM2 32GB** с полным NVLink на одной несущей плате (PEX8748, один
   PCIe x16, питание 2×8-pin), **Atermiter X99 Dual X99** (ZX-DU99D4, E-ATX, C612), **2× Xeon E5-2695 v4**.
 - Осталось: 8× 32 ГБ DDR4-2400 REG ECC (2Rx4), БП 1600 Вт, 2 кулера LGA2011-3 (Square ILM),
   NVMe, корпус/рама с продувом, вентиляторы static-pressure.
@@ -87,10 +87,10 @@ cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=70 && cmake --build bui
 
 ```bash
 /srv/apps/models/bin/install-1cat-vllm.sh --check   # RAM warn < 96 ГБ — это норма для 27B
-/srv/apps/models/bin/install-1cat-vllm.sh 1.5.3 /srv/apps/vllm
+/srv/apps/models/bin/install-1cat-vllm.sh 1.5.4 /srv/apps/vllm
 ```
 
-- Запуск 27B NVFP4 + MTP4: эталон **426 ток/с одиночный @8K, 892 aggregate @8 параллельных**.
+- Запуск 27B NVFP4 + MTP4: эталон **425 ток/с одиночный (DFlash2), 1139–1264 aggregate @8 параллельных**.
 - DFlash2 лучше на коде; MTP4 — на прозе.
 
 **Критерий:** замеры в пределах ±15% эталона (RAM 877 МГц, лимит 300 Вт).

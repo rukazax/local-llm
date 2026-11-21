@@ -9,7 +9,7 @@
 <p align="center">
   <img alt="GPU" src="https://img.shields.io/badge/GPU-4%C3%97%20V100%20SXM2%2032GB-76b900.svg">
   <img alt="VRAM" src="https://img.shields.io/badge/VRAM-128%20GB%20HBM2%20NVLink-4B6BFB.svg">
-  <img alt="engines" src="https://img.shields.io/badge/engines-llama.cpp%20%7C%201Cat--LLM-orange.svg">
+  <img alt="engines" src="https://img.shields.io/badge/engines-llama.cpp%20%7C%201Cat--vLLM%201.5.4-orange.svg">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
   <img alt="docs" src="https://img.shields.io/badge/docs-RU%20%7C%20EN-8A2BE2.svg">
 </p>
@@ -32,13 +32,14 @@
 | [Скорости](#-скорости) | замеры и оценки |
 | [Роадмап](#-роадмап-сборки-и-настройки) | этапы сборки и настройки |
 | [Сборка и запуск](docs/ru/07-build-and-launch.md) | пошаговый мануал до первого токена |
+| [Пул 128 ГБ](docs/ru/08-1cat-vllm-nvfp4.md) | 1Cat-vLLM 1.5.4, NVFP4, 425 ток/с |
 | [Перспективы](#-перспективы-и-направления) | где это применять |
 | [Выводы](#-выводы) | главное по итогам исследований |
 | [Документация](#-документация) | RU/EN файлы базы знаний |
 | [Источники](#-источники) | откуда данные |
 
 **Документы базы знаний:**
-[Железо](docs/ru/01-hardware.md) · [Роадмап](docs/ru/02-roadmap.md) · [Движки](docs/ru/03-engines.md) · [Модели](docs/ru/04-models.md) · [Исследования](docs/ru/05-research.md) · [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md) · [Сборка и запуск](docs/ru/07-build-and-launch.md) — и зеркала на английском в [docs/en](docs/en/).
+[Железо](docs/ru/01-hardware.md) · [Роадмап](docs/ru/02-roadmap.md) · [Движки](docs/ru/03-engines.md) · [Модели](docs/ru/04-models.md) · [Исследования](docs/ru/05-research.md) · [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md) · [Сборка и запуск](docs/ru/07-build-and-launch.md) · [Пул 128 ГБ](docs/ru/08-1cat-vllm-nvfp4.md) — и зеркала на английском в [docs/en](docs/en/).
 
 ---
 
@@ -59,7 +60,7 @@
 | Компонент | Конфигурация | Примечание |
 |---|---|---|
 | GPU | **4× Tesla V100 SXM2 32GB** на одной несущей плате | Volta, SM70, тензор-ядра FP16, HBM2 |
-| Несущая плата | заводской модуль 4×SXM2 + **полный NVLink**, PEX8749 | без NVLink скорость падает ~вдвое |
+| Несущая плата | заводской модуль 4×SXM2 + **полный NVLink**, Broadcom PEX8748 Gen3 | без NVLink скорость падает ~вдвое |
 | Итого VRAM | **128 ГБ HBM2** | однородная конфигурация, TP4 без компромиссов |
 | Связь с хостом | **один PCIe 3.0 x16**, питание 2×8-pin до 1200 Вт | NVLink делает GPU↔GPU, хосту хватает одного слота |
 | CPU | **2× Xeon E5-2695 v4** — 18C/36T, 120 Вт | 36 ядер под CPU-часть гибрида |
@@ -82,7 +83,7 @@
 flowchart LR
     U[Пользователь / DSH-агенты] --> API[OpenAI-совместимый API]
     API --> ENG1[llama.cpp / форки SM70\nGGUF Q4–Q8, MTP]
-    API --> ENG2[1Cat-LLM v1.5.3\nNVFP4 + MTP4 / DFlash2]
+    API --> ENG2[1Cat-vLLM 1.5.4\nNVFP4 + MTP4 / DFlash2]
     ENG1 --> GPU0[4× V100 SXM2 32GB\nTP4 · NVLink 300 ГБ/с]
     ENG2 --> GPU0
     GPU0 --> RAM[(host RAM 256 ГБ\nэксперты MoE · KV offload)]
@@ -157,7 +158,7 @@ $1–1,8 в час, то есть 0,8–1,5 млн ₽ в год при рабо
 | Движок | Статус на Volta | Для чего у нас |
 |---|---|---|
 | **llama.cpp** (+ форки SM70) | ✅ полная | все GGUF: MoE 30–120B, 72B dense, VL, embeddings |
-| **1Cat-LLM** (форк vLLM, v1.5.3) | ✅ флагман | 27B NVFP4 + MTP4/DFlash2 — до **892 ток/с aggregate** |
+| **1Cat-vLLM** (форк vLLM, **1.5.4**) | ✅ флагман | 27B NVFP4 + DFlash2 — **425 ток/с** одиночный, **1139–1264** aggregate (8×8K) |
 | **llamacpp-v100 / llama.cpp-v100** (форки) | ✅ оптимизации под SM70 | Flash-Next на 2–6 GPU, MTP, +20% tensor-split |
 | Ollama | ❌ выпилил Volta | не используем |
 | upstream vLLM | ❌ требует CC ≥ 7.5 | только форки |
@@ -177,7 +178,7 @@ $1–1,8 в час, то есть 0,8–1,5 млн ₽ в год при рабо
 | Модель | Тип | Размер | Зачем |
 |---|---|---|---|
 | GLM-4.5-Air-Derestricted | MoE 110B/12B | Q5 · 83.5 ГБ | основная агентская, tool-calling |
-| Qwen3.8-27B (NVFP4 + MTP4) | dense | 23.4 ГБ | скоростной агент: 426 ток/с одиночный |
+| Qwen3.8-27B (NVFP4 + DFlash2) | dense | 22 ГБ | скоростной агент: 425 ток/с одиночный |
 | Huihui-Qwen3.8-27B-abliterated | dense | Q8 · 29 ГБ | универсал без отказов + зрение + 256K |
 | Qwen3-Coder-30B-A3B-abliterated | MoE 30B/3B | Q5 · 21 ГБ | код-агент, ~100 ток/с |
 | Qwen2.5-72B-Instruct-abliterated | dense | Q6 · 62 ГБ | тяжёлый ризонинг, русский |
@@ -194,7 +195,7 @@ $1–1,8 в час, то есть 0,8–1,5 млн ₽ в год при рабо
 Замеры сообщества на V100 (точные условия — в базе моделей); наши ожидания для 4×32 помечены «оценка».
 
 ```
-Qwen3.8-27B NVFP4 + MTP4 (1Cat, TP4)   ████████████████████ 426 ток/с одиночный · 892 aggregate
+Qwen3.8-27B NVFP4 + DFlash2 (1Cat, TP4) ████████████████████ 425 ток/с одиночный · 1139–1264 aggregate
 Qwen3.8-27B GGUF + MTP (1 карта)       ████████████░░░░░░░░  65 ток/с @1K · 42 @128K
 Qwen3-Coder-30B-A3B Q5 (MoE)           ██████████████████░░  ~100 ток/с (оценка)
 Qwen3.8 Flash-Next IQ3E + MTP (2×32)   ████████████████████  122 ток/с @256K контекст (замер)
@@ -281,6 +282,7 @@ gantt
 | [Исследования](docs/ru/05-research.md) | [Research](docs/en/05-research.md) |
 | [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md) | [Hybrid mode](docs/en/06-hybrid-mode.md) |
 | [Сборка и запуск](docs/ru/07-build-and-launch.md) | [Build & launch](docs/en/07-build-and-launch.md) |
+| [Пул 128 ГБ: 1Cat-vLLM + NVFP4](docs/ru/08-1cat-vllm-nvfp4.md) | [One 128 GB pool: 1Cat-vLLM + NVFP4](docs/en/08-1cat-vllm-nvfp4.md) |
 
 ## 📖 Источники
 
@@ -337,7 +339,7 @@ continuous load and keeps working after that.
 ### Engines
 
 - **llama.cpp** and its SM70 forks — every GGUF: MoE 30–120B, dense 72B, vision, embeddings;
-- **1Cat-LLM** (vLLM fork) — 27B NVFP4 with MTP4/DFlash2 speculative decoding, **892 tok/s aggregate**;
+- **1Cat-vLLM** (vLLM fork, **1.5.4**) — 27B NVFP4 with DFlash2/MTP4 speculative decoding: **425 tok/s** single-stream, **1139–1264 tok/s** aggregate at 8×8K — see [docs/en/08](docs/en/08-1cat-vllm-nvfp4.md);
 - Ollama and upstream vLLM dropped Volta — not used. PyTorch builds are winding down.
 
 ### Speed rules
