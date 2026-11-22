@@ -131,7 +131,7 @@ flowchart LR
 | Позиция | Что именно | Цена | Статус |
 |---|---|---|---|
 | Модуль **4× V100 SXM2 32GB** + NVLink | б/у, проверен продавцом (70 ток/с одиночно, 841 батч) | 390 000 ₽ | **не покупался** — ориентир; собираем из несущей + 4 карт (см. ниже) |
-| Материнская плата | Atermiter X99 Dual X99 (ZX-DU99D4), E-ATX | 4 000–9 199 ₽ | докуплено |
+| Материнская плата | Atermiter X99 Dual X99 (ZX-DU99D4), E-ATX — заказ с доставкой до 29.11 | **4 264 ₽** (4 000 + 819 доставка − 555 скидка) | куплено |
 | CPU ×2 | Xeon E5-2695 v4, 18C/36T, 120 Вт | **1 111 ₽/шт = 2 222 ₽** | куплено |
 | NVMe 2 ТБ | под систему и модели | 30 253 ₽ | куплено |
 | БП + Pico | «2000 Вт» 12 В + 2× PICO-BOX 160 Вт | 4 464 ₽ | куплено |
@@ -150,9 +150,9 @@ flowchart LR
 и доставка). Три 32-гиговые карты — **187 206 ₽** по суммам заказов: 63 046 + 63 046 + 61 114 ₽, плюс
 кулер JEYI 559 ₽. Все три — SXM2-модули: та, что за 61 114 ₽, пришла на **SXM2→PCIe переходнике**,
 карта снимается и встаёт в третий слот. Модуль за 390 000 ₽ с Авито **не покупался** — ориентир.
-**Потрачено подтверждённо: ~349–354 тыс. ₽.** Осталось: **RAM 8× 32 ГБ — 111 614 ₽** (2 комплекта
+**Потрачено подтверждённо: 349 290 ₽.** Осталось: **RAM 8× 32 ГБ — 111 614 ₽** (2 комплекта
 4×32 ГБ Atermiter 2400 ECC REG, 50 286 + пошлина 5 521 каждый) и **четвёртая V100 SXM2 32G —
-63 046 ₽**. **«Под ключ» = ~524–529 тыс. ₽**, в пуле уже 96 ГБ, до 128 ГБ не хватает одной карты.
+63 046 ₽**. **«Под ключ» = 523 950 ₽**, в пуле уже 96 ГБ, до 128 ГБ не хватает одной карты.
 
 **Фотолетопись сборки.** Пустой корпус Ginzzu V503, 22.11.2026, ещё без платы и модуля — [case-empty-2026-11-22.jpg](assets/photos/case-empty-2026-11-22.jpg). Плата **Atermiter X99 dual** (фото лота) — [board-atermiter-2026-11-22.jpg](assets/photos/board-atermiter-2026-11-22.jpg). Дальше сюда пойдут снимки по мере монтажа: плата на стойках, несущая с картами, опрессовка контура.
 
@@ -350,7 +350,7 @@ Diagrams: [chassis layout](assets/chassis-layout.svg) and [power topology](asset
 ### Budget
 
 Actual prices (Russia, Nov 2026): GPU module 4× V100 SXM2 32GB + NVLink 390 000 RUB — **never bought**, an earlier reference; the build
-goes through the carrier + 4 cards; board 4 000–9 200, 2× E5-2695 v4 **1 111 each**, NVMe 2 TB 30 253,
+goes through the carrier + 4 cards; board 4 264 (incl. delivery), 2× E5-2695 v4 **1 111 each**, NVMe 2 TB 30 253,
 PSU + 2× Pico 4 464, **CPU coolers 2 516**, **Ginzzu V503 case 5 240**,
 **water loop 20 979** (Enermax 400 ml pump, 9.5 mm PVC tubing, 24 G1/4 fittings, leak-guard fitting,
 6× ARGB 120 mm fans, 2× 360 mm ТСРП-ХП65-360 radiators, 4-way manifold),
@@ -358,9 +358,9 @@ PSU + 2× Pico 4 464, **CPU coolers 2 516**, **Ginzzu V503 case 5 240**,
 ATX 4-pin → EPS adapter), consumables (2 mm 16.8 W/mK pads, MX-4, M2.5 screws, M.2 cooler),
 one 4-slot SXM2 NVLink carrier with 2× 16 GB V100 cards (**85 961 RUB** incl. tax and shipping; the 16 GB
 cards are kept for bring-up and spares, not for TP4). Three 32 GB cards are in hand at the **WB order amounts — 63 046 + 63 046 + 61 114 = 187 206 RUB**, plus a JEYI M.2 cooler at 559. All three are SXM2 modules: the 61 114 one arrived on an **SXM2→PCIe adapter**, comes off it and drops into the carrier's third socket. They fill 3 of 4 sockets, so 96 GB sits in the NVLink pool. One more SXM2 card is still to buy, as is RAM. RAM 8× 32 GB DDR4-2400 REG ECC = two 4×32 GB Atermiter kits, **111 614 RUB** incl. duty (50 286 + 5 521 each).
-**Checks on 22 Nov: 36 583 RUB (Ozon, verified by SKU). Confirmed spent incl. cards: ~349 000–354 000 RUB**
+**Checks on 22 Nov: 36 583 RUB (Ozon, verified by SKU). Confirmed spent incl. cards: 349 290 RUB**
 (the 390 000 RUB Avito module was never bought — carrier and three 32 GB cards are in hand).
-Remaining: RAM 111 614 + the fourth V100 SXM2 32G 63 046. **Turnkey = ~524 000–529 000 RUB**; on the GPU
+Remaining: RAM 111 614 + the fourth V100 SXM2 32G 63 046. **Turnkey = 523 950 RUB**; on the GPU
 side alone the carrier plus four 32 GB cards plus the case is 341 453 RUB against 407 000 for the Avito
 module with its case. The same 128 GB of
 VRAM in the cloud runs $1–1.8/h, i.e. 0.8–1.5 M RUB a year at 24/7 — the rig pays back in 5–9 months of
