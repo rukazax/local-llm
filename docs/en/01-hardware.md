@@ -21,6 +21,11 @@ or the **4-slot SXM2 NVLink PCB (one kit, bought)** plus **4× V100 SXM2 32GB** 
 the fourth to be bought together with RAM. The **V100 SXM2 16GB cards that come with the carrier are
 not used** in this build; the separate V100 32G PCIe card is not part of TP4.
 
+**Why the 16 GB cards do not fit:** TP4 splits weights into four equal shards, so the cards must be
+identical — 2×16 + 2×32 puts the smallest shard in every layer and caps you at 64 GB instead of 128 GB.
+The pair of 16 GB cards is kept for carrier bring-up (links, BIOS, power before the expensive cards
+arrive) and as a spare set.
+
 ### Platform memory ceiling
 
 - The E5 v4 controller officially supports **up to 1.5 TB** (with 128 GB 3DS LRDIMMs),
