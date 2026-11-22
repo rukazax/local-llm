@@ -26,6 +26,12 @@ identical — 2×16 + 2×32 puts the smallest shard in every layer and caps you 
 The pair of 16 GB cards is kept for carrier bring-up (links, BIOS, power before the expensive cards
 arrive) and as a spare set.
 
+**Where the 16 GB pair can go** (best first): 1) bring-up and RMA stand-in — free, already planned;
+2) a mini-node on a 2-slot SXM2 carrier (32 GB total) for embeddings, reranker, ASR and 7–14B models —
+but SXM2 cards ship without fans, so heatsinks with airflow, a PSU and a case eat the savings;
+3) sell them to fund the fourth 32 GB card; 4) keep them as spares until the warranty window closes.
+They never join TP4: mixed capacities break the uniform shards.
+
 ### Platform memory ceiling
 
 - The E5 v4 controller officially supports **up to 1.5 TB** (with 128 GB 3DS LRDIMMs),
