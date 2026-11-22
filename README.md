@@ -154,7 +154,7 @@ flowchart LR
 4×32 ГБ Atermiter 2400 ECC REG, 50 286 + пошлина 5 521 каждый) и **четвёртая V100 SXM2 32G —
 63 046 ₽**. **«Под ключ» = ~524–529 тыс. ₽**, в пуле уже 96 ГБ, до 128 ГБ не хватает одной карты.
 
-**Фотолетопись сборки.** Пустой корпус Ginzzu V503, 22.11.2026, ещё без платы и модуля — [case-empty-2026-11-22.jpg](assets/photos/case-empty-2026-11-22.jpg). Дальше сюда пойдут снимки по мере монтажа: плата, несущая с картами, опрессовка контура.
+**Фотолетопись сборки.** Пустой корпус Ginzzu V503, 22.11.2026, ещё без платы и модуля — [case-empty-2026-11-22.jpg](assets/photos/case-empty-2026-11-22.jpg). Плата **Atermiter X99 dual** (фото лота) — [board-atermiter-2026-11-22.jpg](assets/photos/board-atermiter-2026-11-22.jpg). Дальше сюда пойдут снимки по мере монтажа: плата на стойках, несущая с картами, опрессовка контура.
 
 Водяной контур собран под **240 Вт CPU** сразу и с запасом под водоблоки GPU: 24 фитинга — это
 2 CPU + помпа + радиатор с запасом на 4 карты. В мануале — порядок опрессовки: сутки на
@@ -343,7 +343,7 @@ off. Then power: 24-pin from the Pico, 2× EPS from the 12 V unit through `6+2 �
 measured before the first switch-on. Only then the module into the top x16 on the CPU1 side — on a
 support, with **two 6+2 cables per input**. OS, driver 580.x, CUDA 12.8, `nvidia-smi topo -m` must show
 NV4/NV6 and `nvlink -e` zeros. Acceptance: `gpu-burn 300` at ≤85 °C.
-Photos: the empty Ginzzu V503 case on 22 Nov 2026, before the board and module go in — [case-empty-2026-11-22.jpg](assets/photos/case-empty-2026-11-22.jpg); build shots follow.
+Photos: the empty Ginzzu V503 case on 22 Nov 2026, before the board and module go in — [case-empty-2026-11-22.jpg](assets/photos/case-empty-2026-11-22.jpg); the Atermiter X99 dual board as listed — [board-atermiter-2026-11-22.jpg](assets/photos/board-atermiter-2026-11-22.jpg). Build shots follow.
 
 Diagrams: [chassis layout](assets/chassis-layout.svg) and [power topology](assets/power-topology.svg).
 
