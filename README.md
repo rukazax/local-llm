@@ -142,17 +142,17 @@ flowchart LR
 | Питание: учёт и выключение | Wi-Fi розетка 20 А с **мониторингом потребления** · Tuya 16 А реле · переходник ATX 4-pin → EPS 8(4+4) | **1 162 ₽** | куплено |
 | Расходники | термопрокладка 2 мм 16,8 W/mK · Arctic MX-4 8 г · винты M2.5×12 DIN912 ×10 · кулер JEYI для M.2 | WB, уточняется | куплено |
 | Несущая плата | **4-слотовая SXM2 NVLink PCB + 2× V100 16GB — 1 комплект** (16-гиговые в TP4 не участвуют, остаются для bring-up и подмены) | **85 961 ₽** с налогами и доставкой | куплено |
-| Карты V100 SXM2 32G | **2 шт куплены** по 70 271 ₽ с пошлиной (WB 1599277282, 1347145709), занято **2 слота из 4**, **1 докупить** (AliExpress 62 863 + 7 408) | **140 542 ₽** | 2 из 4 |
-| V100 32G PCIe (медь) | отдельная карта, в SXM2-несущую не ставится — идёт в слот платы | **106 923 ₽** (94 735 + 12 188 пошлина) | куплено |
+| Карты V100 SXM2 32G | **3 шт куплены** по суммам заказов (WB 1599277282, 1347145709, 2244587075), занято **3 слота из 4**, **1 докупить** | **187 206 ₽** (61 114 + 2× 63 046) | 3 из 4 |
+| V100 32G на переходнике | SXM2-модуль на **SXM2→PCIe переходнике**, медь: карта снимается и встаёт в несущую, переходник остаётся свободным | **61 114 ₽** | куплено |
 
 **Итого по Ozon за закупку 22.11 — 36 583 ₽** (цены проверены по артикулам). Несущая с парой
-16-гиговых карт — **85 961 ₽** с налогами и доставкой. Три 32-гиговые карты — **247 465 ₽**: 2× V100
-SXM2 32G по 62 863 + 7 408 ₽ пошлины и V100 32G PCIe 94 735 + 12 188 ₽. Модуль за 390 000 ₽ с Авито
-**не покупался** — он был ориентиром.
-**Потрачено подтверждённо: ~409–414 тыс. ₽.** Осталось: **RAM 8× 32 ГБ — 111 614 ₽** (2 комплекта
-4×32 ГБ Atermiter 2400 ECC REG, 50 286 + пошлина 5 521 каждый) и **ещё одна V100 SXM2 32G —
-70 271 ₽** с пошлиной. **«Под ключ» = ~591–596 тыс. ₽**; за чистый NVLink-пул 4×SXM2 (ещё одна
-SXM2) — **~661–666 тыс. ₽**.
+16-гиговых карт — **85 961 ₽** с налогами и доставкой (в заказе WB видно 85 291 ₽, разница — налоги
+и доставка). Три 32-гиговые карты — **187 206 ₽** по суммам заказов: 63 046 + 63 046 + 61 114 ₽, плюс
+кулер JEYI 559 ₽. Все три — SXM2-модули: та, что за 61 114 ₽, пришла на **SXM2→PCIe переходнике**,
+карта снимается и встаёт в третий слот. Модуль за 390 000 ₽ с Авито **не покупался** — ориентир.
+**Потрачено подтверждённо: ~349–354 тыс. ₽.** Осталось: **RAM 8× 32 ГБ — 111 614 ₽** (2 комплекта
+4×32 ГБ Atermiter 2400 ECC REG, 50 286 + пошлина 5 521 каждый) и **четвёртая V100 SXM2 32G —
+63 046 ₽**. **«Под ключ» = ~524–529 тыс. ₽**, в пуле уже 96 ГБ, до 128 ГБ не хватает одной карты.
 
 **Фотолетопись сборки.** Пустой корпус Ginzzu V503, 22.11.2026, ещё без платы и модуля — [case-empty-2026-11-22.jpg](assets/photos/case-empty-2026-11-22.jpg). Дальше сюда пойдут снимки по мере монтажа: плата, несущая с картами, опрессовка контура.
 
@@ -357,11 +357,12 @@ PSU + 2× Pico 4 464, **CPU coolers 2 516**, **Ginzzu V503 case 5 240**,
 **power monitoring and switching 1 162** (20 A Wi-Fi socket with energy metering, Tuya 16 A relay,
 ATX 4-pin → EPS adapter), consumables (2 mm 16.8 W/mK pads, MX-4, M2.5 screws, M.2 cooler),
 one 4-slot SXM2 NVLink carrier with 2× 16 GB V100 cards (**85 961 RUB** incl. tax and shipping; the 16 GB
-cards are kept for bring-up and spares, not for TP4) and one V100 32G PCIe card. Three 32 GB cards are in hand: **2× V100 SXM2 32G at 62 863 + 7 408 RUB duty each, plus 1× V100 32G PCIe at 94 735 + 12 188 RUB duty — 247 465 RUB total**. They fill 2 of the carrier's 4 sockets; the PCIe card goes into a board slot. One more SXM2 card is still to buy, as is RAM. RAM 8× 32 GB DDR4-2400 REG ECC = two 4×32 GB Atermiter kits, **111 614 RUB** incl. duty (50 286 + 5 521 each).
-**Checks on 22 Nov: 36 583 RUB (Ozon, verified by SKU). Confirmed spent incl. cards: ~409 000–414 000 RUB**
+cards are kept for bring-up and spares, not for TP4). Three 32 GB cards are in hand at the **WB order amounts — 63 046 + 63 046 + 61 114 = 187 206 RUB**, plus a JEYI M.2 cooler at 559. All three are SXM2 modules: the 61 114 one arrived on an **SXM2→PCIe adapter**, comes off it and drops into the carrier's third socket. They fill 3 of 4 sockets, so 96 GB sits in the NVLink pool. One more SXM2 card is still to buy, as is RAM. RAM 8× 32 GB DDR4-2400 REG ECC = two 4×32 GB Atermiter kits, **111 614 RUB** incl. duty (50 286 + 5 521 each).
+**Checks on 22 Nov: 36 583 RUB (Ozon, verified by SKU). Confirmed spent incl. cards: ~349 000–354 000 RUB**
 (the 390 000 RUB Avito module was never bought — carrier and three 32 GB cards are in hand).
-Remaining: RAM 111 614 + one more V100 SXM2 32G 70 271 (incl. duty). **Turnkey = ~591 000–596 000 RUB**;
-a pure 4×SXM2 NVLink pool (one more SXM2 card) lands at **~661 000–666 000 RUB**. The same 128 GB of
+Remaining: RAM 111 614 + the fourth V100 SXM2 32G 63 046. **Turnkey = ~524 000–529 000 RUB**; on the GPU
+side alone the carrier plus four 32 GB cards plus the case is 341 453 RUB against 407 000 for the Avito
+module with its case. The same 128 GB of
 VRAM in the cloud runs $1–1.8/h, i.e. 0.8–1.5 M RUB a year at 24/7 — the rig pays back in 5–9 months of
 continuous load and keeps working after that.
 
