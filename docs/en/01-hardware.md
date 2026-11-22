@@ -17,9 +17,10 @@
 | OS | Ubuntu 24.04+ | glibc ≥ 2.38, GLIBCXX ≥ 3.4.30 |
 
 **How the TP4 set is assembled (status 22 Nov):** either a ready-made 4×SXM2 32GB NVLink module,
-or the **4-slot SXM2 NVLink PCB (one kit, bought)** plus **4× V100 SXM2 32GB** — three cards in hand,
-the fourth to be bought together with RAM. The **V100 SXM2 16GB cards that come with the carrier are
-not used** in this build; the separate V100 32G PCIe card is not part of TP4.
+or the **4-slot SXM2 NVLink PCB (one kit, bought)** plus **V100 SXM2 32GB cards**. In hand: **two SXM2**
+(2 of the 4 sockets filled) and **one V100 32G PCIe** — the PCIe card cannot sit in the carrier and goes
+into a board slot. One more SXM2 is to be bought together with RAM, giving 96 GB in the NVLink pool plus
+32 GB over PCIe. The **V100 SXM2 16GB cards that come with the carrier are not used** in this build.
 
 **Why the 16 GB cards do not fit:** TP4 splits weights into four equal shards, so the cards must be
 identical — 2×16 + 2×32 puts the smallest shard in every layer and caps you at 64 GB instead of 128 GB.
