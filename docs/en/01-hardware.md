@@ -16,6 +16,11 @@
 | Disk | NVMe 4–8 GB/s | model checkpoints are 20–90 GB |
 | OS | Ubuntu 24.04+ | glibc ≥ 2.38, GLIBCXX ≥ 3.4.30 |
 
+**How the TP4 set is assembled (status 22 Nov):** either a ready-made 4×SXM2 32GB NVLink module,
+or the **4-slot SXM2 NVLink PCB (one kit, bought)** plus **4× V100 SXM2 32GB** — three cards in hand,
+the fourth to be bought together with RAM. The **V100 SXM2 16GB cards that come with the carrier are
+not used** in this build; the separate V100 32G PCIe card is not part of TP4.
+
 ### Platform memory ceiling
 
 - The E5 v4 controller officially supports **up to 1.5 TB** (with 128 GB 3DS LRDIMMs),

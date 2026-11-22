@@ -130,7 +130,7 @@ flowchart LR
 
 | Позиция | Что именно | Цена | Статус |
 |---|---|---|---|
-| Модуль **4× V100 SXM2 32GB** + NVLink | б/у, проверен продавцом (70 ток/с одиночно, 841 батч) | 390 000 ₽ | куплено |
+| Модуль **4× V100 SXM2 32GB** + NVLink | б/у, проверен продавцом (70 ток/с одиночно, 841 батч) | 390 000 ₽ | куплено (либо собираем из несущей + 4 карт — см. ниже) |
 | Корпус под модуль | взят вместе с модулем | 17 000 ₽ | куплено |
 | Материнская плата | Atermiter X99 Dual X99 (ZX-DU99D4), E-ATX | 4 000–9 199 ₽ | докуплено |
 | CPU ×2 | Xeon E5-2695 v4, 18C/36T, 120 Вт | **1 111 ₽/шт = 2 222 ₽** | куплено |
@@ -142,7 +142,9 @@ flowchart LR
 | **СЖО, контур** | помпа Enermax ELC-NC200RGB 400 мл · шланг ПВХ 9,5 мм ×2 м · **24 фитинга** G1/4 «пагода» · антиутечка · **6× ARGB 120 мм** · 2× монтажный комплект радиатора · пневмораспределитель | **40 559 ₽** | куплено |
 | Питание: учёт и выключение | Wi-Fi розетка 20 А с **мониторингом потребления** · Tuya 16 А реле · переходник ATX 4-pin → EPS 8(4+4) | **1 162 ₽** | куплено |
 | Расходники | термопрокладка 2 мм 16,8 W/mK · Arctic MX-4 8 г · винты M2.5×12 DIN912 ×10 · кулер JEYI для M.2 | WB, уточняется | куплено |
-| Доп. лоты V100 | 2× плата 4×SXM2 под V100 16GB · V100 32G PCIe (медь) · 2× V100 SXM2 32G | WB, уточняется | куплено |
+| Несущая плата | **4-слотовая SXM2 NVLink PCB — 1 комплект**; V100 SXM2 **16GB из комплектации в сборке не участвуют** | WB, уточняется | куплено |
+| Карты V100 SXM2 32GB | **TP4 = 4 шт**: 3 на руках, **1 докупить** вместе с RAM | 2 шт по WB + 1 впереди | 3 из 4 |
+| V100 32G PCIe (медь) | отдельная карта, в TP4-сборку не входит | WB, уточняется | куплено |
 
 **Итого по Ozon за закупку 22.11 — 56 163 ₽** (цены проверены по артикулам; WB закрыт антиботом,
 суммы по нему из истории заказов). **Потрачено всего: ~502–507 тыс. ₽**, осталось только **RAM —
@@ -345,8 +347,9 @@ PSU + 2× Pico 4 464, **CPU coolers 2 516**, **Ginzzu V503 case 5 240**,
 **water loop 40 559** (Enermax 400 ml pump, 9.5 mm PVC tubing, 24 G1/4 fittings, leak-guard fitting,
 6× ARGB 120 mm fans, 2× radiator mounting kits, 4-way manifold),
 **power monitoring and switching 1 162** (20 A Wi-Fi socket with energy metering, Tuya 16 A relay,
-ATX 4-pin → EPS adapter), consumables (2 mm 16.8 W/mK pads, MX-4, M2.5 screws, M.2 cooler) and extra
-V100 lots — WB totals pending. RAM 8× 32 GB DDR4-2400 RDIMM 96 000–112 000 still to buy.
+ATX 4-pin → EPS adapter), consumables (2 mm 16.8 W/mK pads, MX-4, M2.5 screws, M.2 cooler),
+one 4-slot SXM2 NVLink carrier (its 16 GB V100 cards are not used in this build) and one V100 32G PCIe
+card — WB totals pending. The TP4 set is **3 of 4 V100 SXM2 32GB bought; the fourth is still to buy**, as is RAM. RAM 8× 32 GB DDR4-2400 RDIMM 96 000–112 000 still to buy.
 **Checks on 22 Nov: 56 163 RUB (Ozon, verified by SKU). Total spent: ~502 000–507 000 RUB.
 Turnkey: ~600 000–620 000 RUB** plus the WB lots. The same 128 GB of
 VRAM in the cloud runs $1–1.8/h, i.e. 0.8–1.5 M RUB a year at 24/7 — the rig pays back in 5–9 months of
