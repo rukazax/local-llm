@@ -154,6 +154,8 @@ SXM2 32G по 62 863 + 7 408 ₽ пошлины и V100 32G PCIe 94 735 + 12 188
 70 271 ₽** с пошлиной. **«Под ключ» = ~591–596 тыс. ₽**; за чистый NVLink-пул 4×SXM2 (ещё одна
 SXM2) — **~661–666 тыс. ₽**.
 
+**Фотолетопись сборки.** Пустой корпус Ginzzu V503, 22.11.2026, ещё без платы и модуля — [case-empty-2026-11-22.jpg](assets/photos/case-empty-2026-11-22.jpg). Дальше сюда пойдут снимки по мере монтажа: плата, несущая с картами, опрессовка контура.
+
 Водяной контур собран под **240 Вт CPU** сразу и с запасом под водоблоки GPU: 24 фитинга — это
 2 CPU + помпа + радиатор с запасом на 4 карты. В мануале — порядок опрессовки: сутки на
 герметичность до подачи напряжения, дельта на CPU ≤ 35 °C, жидкость — дистиллят + биоцид.
@@ -341,6 +343,8 @@ off. Then power: 24-pin from the Pico, 2× EPS from the 12 V unit through `6+2 �
 measured before the first switch-on. Only then the module into the top x16 on the CPU1 side — on a
 support, with **two 6+2 cables per input**. OS, driver 580.x, CUDA 12.8, `nvidia-smi topo -m` must show
 NV4/NV6 and `nvlink -e` zeros. Acceptance: `gpu-burn 300` at ≤85 °C.
+Photos: the empty Ginzzu V503 case on 22 Nov 2026, before the board and module go in — [case-empty-2026-11-22.jpg](assets/photos/case-empty-2026-11-22.jpg); build shots follow.
+
 Diagrams: [chassis layout](assets/chassis-layout.svg) and [power topology](assets/power-topology.svg).
 
 ### Budget
