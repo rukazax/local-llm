@@ -130,7 +130,7 @@ flowchart LR
 
 | Позиция | Что именно | Цена | Статус |
 |---|---|---|---|
-| Модуль **4× V100 SXM2 32GB** + NVLink | б/у, проверен продавцом (70 ток/с одиночно, 841 батч) | 390 000 ₽ | куплено (либо собираем из несущей + 4 карт — см. ниже) |
+| Модуль **4× V100 SXM2 32GB** + NVLink | б/у, проверен продавцом (70 ток/с одиночно, 841 батч) | 390 000 ₽ | **избыточен**: собираем из несущей + 4 карт (см. ниже); статус оплаты уточнить |
 | Корпус под модуль | взят вместе с модулем | 17 000 ₽ | куплено |
 | Материнская плата | Atermiter X99 Dual X99 (ZX-DU99D4), E-ATX | 4 000–9 199 ₽ | докуплено |
 | CPU ×2 | Xeon E5-2695 v4, 18C/36T, 120 Вт | **1 111 ₽/шт = 2 222 ₽** | куплено |
@@ -139,16 +139,19 @@ flowchart LR
 | **RAM 256 ГБ** | 8× 32 ГБ DDR4-2400 REG ECC 2Rx4 | 12 006–14 000 ₽/шт → **96–112 тыс.** | купить |
 | Кулеры ×2 | башня с тепловыми трубками, LGA2011-3 | **2 516 ₽** | куплено |
 | Корпус | **Ginzzu V503**, ATX-куб, закалённое стекло | **5 240 ₽** | куплено |
-| **СЖО, контур** | помпа Enermax ELC-NC200RGB 400 мл · шланг ПВХ 9,5 мм ×2 м · **24 фитинга** G1/4 «пагода» · антиутечка · **6× ARGB 120 мм** · 2× монтажный комплект радиатора · пневмораспределитель | **40 559 ₽** | куплено |
+| **СЖО, контур** | помпа Enermax ELC-NC200RGB 400 мл · шланг ПВХ 9,5 мм ×2 м · **24 фитинга** G1/4 «пагода» · антиутечка · **6× ARGB 120 мм** · **2× радиатор 360 мм ТСРП-ХП65-360** · пневмораспределитель | **20 979 ₽** | куплено |
 | Питание: учёт и выключение | Wi-Fi розетка 20 А с **мониторингом потребления** · Tuya 16 А реле · переходник ATX 4-pin → EPS 8(4+4) | **1 162 ₽** | куплено |
 | Расходники | термопрокладка 2 мм 16,8 W/mK · Arctic MX-4 8 г · винты M2.5×12 DIN912 ×10 · кулер JEYI для M.2 | WB, уточняется | куплено |
-| Несущая плата | **4-слотовая SXM2 NVLink PCB — 1 комплект**; V100 SXM2 **16GB из комплектации в сборке не участвуют** | WB, уточняется | куплено |
+| Несущая плата | **4-слотовая SXM2 NVLink PCB + 2× V100 16GB — 1 комплект** (16-гиговые в TP4 не участвуют, остаются для bring-up и подмены) | **85 961 ₽** с налогами и доставкой | куплено |
 | Карты V100 SXM2 32GB | **TP4 = 4 шт**: 3 на руках, **1 докупить** вместе с RAM | 2 шт по WB + 1 впереди | 3 из 4 |
 | V100 32G PCIe (медь) | отдельная карта, в TP4-сборку не входит | WB, уточняется | куплено |
 
-**Итого по Ozon за закупку 22.11 — 56 163 ₽** (цены проверены по артикулам; WB закрыт антиботом,
-суммы по нему из истории заказов). **Потрачено всего: ~502–507 тыс. ₽**, осталось только **RAM —
-96–112 тыс.**, то есть **под ключ ~600–620 тыс. ₽** плюс WB-лоты.
+**Итого по Ozon за закупку 22.11 — 36 583 ₽** (цены проверены по артикулам). Несущая с парой
+16-гиговых карт — **85 961 ₽** с налогами и доставкой. **Потрачено подтверждённо: ~161–166 тыс. ₽**
+(если модуль за 407 000 ₽ с Авито не берём — он избыточен, карты и несущая уже на руках).
+Осталось: **RAM 8× 32 ГБ — 111 614 ₽** (2 комплекта 4×32 ГБ Atermiter 2400 ECC REG, 50 286 + пошлина
+5 521 каждый) и **4-я V100 SXM2 32G — 70 271 ₽** с пошлиной. **Под ключ ~343–348 тыс. ₽**;
+с Авито-модулем «про запас» — ~750–755 тыс.
 
 Водяной контур собран под **240 Вт CPU** сразу и с запасом под водоблоки GPU: 24 фитинга — это
 2 CPU + помпа + радиатор с запасом на 4 карты. В мануале — порядок опрессовки: сутки на
@@ -341,17 +344,19 @@ Diagrams: [chassis layout](assets/chassis-layout.svg) and [power topology](asset
 
 ### Budget
 
-Actual prices (Russia, Nov 2026): GPU module 4× V100 SXM2 32GB + NVLink 390 000 RUB
-(+17 000 case), board 4 000–9 200, 2× E5-2695 v4 **1 111 each**, NVMe 2 TB 30 253,
+Actual prices (Russia, Nov 2026): GPU module 4× V100 SXM2 32GB + NVLink 390 000 RUB (+17 000 case) — **not needed**, the build goes
+through the carrier + 4 cards; board 4 000–9 200, 2× E5-2695 v4 **1 111 each**, NVMe 2 TB 30 253,
 PSU + 2× Pico 4 464, **CPU coolers 2 516**, **Ginzzu V503 case 5 240**,
-**water loop 40 559** (Enermax 400 ml pump, 9.5 mm PVC tubing, 24 G1/4 fittings, leak-guard fitting,
-6× ARGB 120 mm fans, 2× radiator mounting kits, 4-way manifold),
+**water loop 20 979** (Enermax 400 ml pump, 9.5 mm PVC tubing, 24 G1/4 fittings, leak-guard fitting,
+6× ARGB 120 mm fans, 2× 360 mm ТСРП-ХП65-360 radiators, 4-way manifold),
 **power monitoring and switching 1 162** (20 A Wi-Fi socket with energy metering, Tuya 16 A relay,
 ATX 4-pin → EPS adapter), consumables (2 mm 16.8 W/mK pads, MX-4, M2.5 screws, M.2 cooler),
-one 4-slot SXM2 NVLink carrier (its 16 GB V100 cards are not used in this build) and one V100 32G PCIe
-card — WB totals pending. The TP4 set is **3 of 4 V100 SXM2 32GB bought; the fourth is still to buy**, as is RAM. RAM 8× 32 GB DDR4-2400 RDIMM 96 000–112 000 still to buy.
-**Checks on 22 Nov: 56 163 RUB (Ozon, verified by SKU). Total spent: ~502 000–507 000 RUB.
-Turnkey: ~600 000–620 000 RUB** plus the WB lots. The same 128 GB of
+one 4-slot SXM2 NVLink carrier with 2× 16 GB V100 cards (**85 961 RUB** incl. tax and shipping; the 16 GB
+cards are kept for bring-up and spares, not for TP4) and one V100 32G PCIe card. The TP4 set is **3 of 4 V100 SXM2 32GB bought; the fourth is still to buy**, as is RAM. RAM 8× 32 GB DDR4-2400 REG ECC = two 4×32 GB Atermiter kits, **111 614 RUB** incl. duty (50 286 + 5 521 each) still to buy.
+**Checks on 22 Nov: 36 583 RUB (Ozon, verified by SKU). Confirmed spent: ~161 000–166 000 RUB**
+(the 407 000 RUB Avito module is not needed — carrier and three 32 GB cards are already in hand).
+Remaining: RAM 111 614 + the fourth V100 SXM2 32G 70 271 (incl. duty). **Turnkey: ~343 000–348 000 RUB**;
+~750 000–755 000 if the Avito module is kept as a spare. The same 128 GB of
 VRAM in the cloud runs $1–1.8/h, i.e. 0.8–1.5 M RUB a year at 24/7 — the rig pays back in 5–9 months of
 continuous load and keeps working after that.
 
