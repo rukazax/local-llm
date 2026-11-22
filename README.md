@@ -133,14 +133,24 @@ flowchart LR
 | Модуль **4× V100 SXM2 32GB** + NVLink | б/у, проверен продавцом (70 ток/с одиночно, 841 батч) | 390 000 ₽ | куплено |
 | Корпус под модуль | взят вместе с модулем | 17 000 ₽ | куплено |
 | Материнская плата | Atermiter X99 Dual X99 (ZX-DU99D4), E-ATX | 4 000–9 199 ₽ | докуплено |
-| CPU ×2 | Xeon E5-2695 v4, 18C/36T, 120 Вт | 1 207–1 800 ₽/шт | докуплено |
+| CPU ×2 | Xeon E5-2695 v4, 18C/36T, 120 Вт | **1 111 ₽/шт = 2 222 ₽** | куплено |
 | NVMe 2 ТБ | под систему и модели | 30 253 ₽ | куплено |
 | БП + Pico | «2000 Вт» 12 В + 2× PICO-BOX 160 Вт | 4 464 ₽ | куплено |
 | **RAM 256 ГБ** | 8× 32 ГБ DDR4-2400 REG ECC 2Rx4 | 12 006–14 000 ₽/шт → **96–112 тыс.** | купить |
-| Кулеры ×2 | LGA2011-3 Square ILM | 1 500–3 000 ₽ | купить |
-| Мелочь | переходники 6+2→EPS, XT60, мастер-выключатель, паста | 2 000–3 000 ₽ | купить |
+| Кулеры ×2 | башня с тепловыми трубками, LGA2011-3 | **2 516 ₽** | куплено |
+| Корпус | **Ginzzu V503**, ATX-куб, закалённое стекло | **5 240 ₽** | куплено |
+| **СЖО, контур** | помпа Enermax ELC-NC200RGB 400 мл · шланг ПВХ 9,5 мм ×2 м · **24 фитинга** G1/4 «пагода» · антиутечка · **6× ARGB 120 мм** · 2× монтажный комплект радиатора · пневмораспределитель | **40 559 ₽** | куплено |
+| Питание: учёт и выключение | Wi-Fi розетка 20 А с **мониторингом потребления** · Tuya 16 А реле · переходник ATX 4-pin → EPS 8(4+4) | **1 162 ₽** | куплено |
+| Расходники | термопрокладка 2 мм 16,8 W/mK · Arctic MX-4 8 г · винты M2.5×12 DIN912 ×10 · кулер JEYI для M.2 | WB, уточняется | куплено |
+| Доп. лоты V100 | 2× плата 4×SXM2 под V100 16GB · V100 32G PCIe (медь) · 2× V100 SXM2 32G | WB, уточняется | куплено |
 
-**Итого под ключ: ~554–573 тыс. ₽**, из них ~455 тыс. уже потрачено.
+**Итого по Ozon за закупку 22.11 — 56 163 ₽** (цены проверены по артикулам; WB закрыт антиботом,
+суммы по нему из истории заказов). **Потрачено всего: ~502–507 тыс. ₽**, осталось только **RAM —
+96–112 тыс.**, то есть **под ключ ~600–620 тыс. ₽** плюс WB-лоты.
+
+Водяной контур собран под **240 Вт CPU** сразу и с запасом под водоблоки GPU: 24 фитинга — это
+2 CPU + помпа + радиатор с запасом на 4 карты. В мануале — порядок опрессовки: сутки на
+герметичность до подачи напряжения, дельта на CPU ≤ 35 °C, жидкость — дистиллят + биоцид.
 
 Экономика: сравнимый объём VRAM (4× V100 = 128 ГБ) в облаке по публичным тарифам — порядка
 $1–1,8 в час, то есть 0,8–1,5 млн ₽ в год при работе 24/7. Стенд отбивается за **5–9 месяцев**
@@ -329,10 +339,16 @@ Diagrams: [chassis layout](assets/chassis-layout.svg) and [power topology](asset
 
 ### Budget
 
-Actual and quoted prices (Russia, Nov 2026): GPU module 4× V100 SXM2 32GB + NVLink 390 000 RUB
-(+17 000 case), board 4 000–9 200, 2× E5-2695 v4 1 200–1 800 each, NVMe 2 TB 30 253,
-PSU + 2× Pico 4 464, RAM 8× 32 GB DDR4-2400 RDIMM 96 000–112 000, coolers 1 500–3 000, adapters and
-sundries 2 000–3 000. **Turnkey: ~554 000–573 000 RUB**, about 455 000 already spent. The same 128 GB of
+Actual prices (Russia, Nov 2026): GPU module 4× V100 SXM2 32GB + NVLink 390 000 RUB
+(+17 000 case), board 4 000–9 200, 2× E5-2695 v4 **1 111 each**, NVMe 2 TB 30 253,
+PSU + 2× Pico 4 464, **CPU coolers 2 516**, **Ginzzu V503 case 5 240**,
+**water loop 40 559** (Enermax 400 ml pump, 9.5 mm PVC tubing, 24 G1/4 fittings, leak-guard fitting,
+6× ARGB 120 mm fans, 2× radiator mounting kits, 4-way manifold),
+**power monitoring and switching 1 162** (20 A Wi-Fi socket with energy metering, Tuya 16 A relay,
+ATX 4-pin → EPS adapter), consumables (2 mm 16.8 W/mK pads, MX-4, M2.5 screws, M.2 cooler) and extra
+V100 lots — WB totals pending. RAM 8× 32 GB DDR4-2400 RDIMM 96 000–112 000 still to buy.
+**Checks on 22 Nov: 56 163 RUB (Ozon, verified by SKU). Total spent: ~502 000–507 000 RUB.
+Turnkey: ~600 000–620 000 RUB** plus the WB lots. The same 128 GB of
 VRAM in the cloud runs $1–1.8/h, i.e. 0.8–1.5 M RUB a year at 24/7 — the rig pays back in 5–9 months of
 continuous load and keeps working after that.
 
