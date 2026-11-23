@@ -27,7 +27,8 @@ and neither is limited by "intelligence" — both are limited by **pipeline disc
    available option is **VoxCPM2** (2B, 30 languages, 48 kHz, Apache-2.0): voice cloning plus
    Voice Design from a description, and the best Russian timbre similarity in its class (SIM 81.1),
    although its Russian WER is 3.6–5.2 % — one word in ~25 needs a gate. On our rig it is now
-   measured: it fits in 8 GB, but RTF 18.8 — good for samples, not for a whole volume
+   measured: it fits in 8 GB (peak 5.46 GB) at RTF 2.20 — good for samples; for a whole volume it
+   stays 4.7× more expensive than TeraTTSv2
    ([acceptance run on a 2080](../research/voxcpm2-rtx2080-acceptance-2026-11-23.md)).
 3. **Emotion is data, not a volume knob.** The role markup must carry state (calm, angry, tired,
    whisper) and the engine receives it as a style instruction or a separate reference. Otherwise
@@ -128,7 +129,7 @@ Data from model cards and public benchmarks; our own measurement is marked ✅.
 
 | Engine | Russian | Emotion | Audio | VRAM | Licence | Verdict |
 |---|---|---|---|---|---|---|
-| **VoxCPM2** (OpenBMB, 2B) | 30 languages; ru WER 5.21 (CV3) / 3.63 (MLS); **SIM 81.1, best in class** | Voice Design from a description + style guidance while cloning | **48 kHz** | ~8 GB, RTF ~0.3 (4090), **✅ 18.8 on a 2080 Max-Q** | **Apache-2.0** | **primary candidate** for samples; not for full-volume rendering (peak VRAM 5.46 GB fits, speed does not) |
+| **VoxCPM2** (OpenBMB, 2B) | 30 languages; ru WER 5.21 (CV3) / 3.63 (MLS); **SIM 81.1, best in class** | Voice Design from a description + style guidance while cloning | **48 kHz** | ~8 GB, RTF ~0.3 (4090), **✅ 2.20 on a 2080 Max-Q** | **Apache-2.0** | **primary candidate** for samples and trailers; a volume is possible (≈ 31 h) but 4.7× the cost of TeraTTSv2 |
 | **Qwen3-TTS-1.7B** | 10 languages, ru WER 3.21, but stress complaints | voice description, 3-s cloning | 24 kHz | ~4.8 GB | Apache-2.0 | second candidate, check stress |
 | **Fish Audio S2** (4B) | ru WER 2.4–2.8, best intelligibility | yes | 24–44 kHz | ~10 GB | open weights | intelligibility candidate |
 | **TeraTTSv2** | Russian-native, **automatic stress** (RUAccent, MIT); ✅ WER **1.8 %** on 9 phrases (CPU, 44.1 kHz), names and numbers read correctly | 10 voice styles | **44.1 kHz** | ONNX, **CPU** | OpenRAIL-M + attribution (**commercial OK**) | stress safety net, runs without a GPU |
@@ -144,17 +145,22 @@ Data from model cards and public benchmarks; our own measurement is marked ✅.
 | Engine | Hardware | Result | Fitness |
 |---|---|---|---|
 | **TeraTTSv2** | AI-NAS, **CPU** | RTF 0.47 (0.34–0.67), WER 1.8 %, 2.5 GB RAM, 44.1 kHz, automatic stress | the base engine for volumes |
-| **VoxCPM2** | RTX 2080 Max-Q 8 GB | 5.5 GB VRAM, 48 kHz, RTF 18.8 — **the number is invalid**: transformers 5.20 requires torch ≥ 2.6, 2.5.1 was installed, so the engine ran without PyTorch | re-measure after fixing the environment |
+| **VoxCPM2** | RTX 2080 Max-Q 8 GB | peak VRAM 5.46 GB, 48 kHz, RTF **2.20** (2.12–2.69 excluding warm-up), 4 steps — 1.16–1.28 | fits samples and trailers; a volume ≈ 31 h versus ≈ 6.6 h on TeraTTSv2 |
+
+The first run reported RTF 18.8, and that number was invalid for two reasons: transformers 5.20
+requires torch ≥ 2.6 (2.5.1 was installed and the library disabled PyTorch — fixed on
+2.6.0+cu124), and XTTS held 2.7 GB of the card, so Windows spilled to shared memory and a step cost
+2.9 s instead of 0.33 s. After the fix throughput improved 8.5×.
 
 Two VoxCPM2 defects that do not depend on the environment and are confirmed by measurement:
-**numbers are read in English** ("21 boxes" → "twenty one", so a own number expander is needed before
-synthesis) and **Voice Design only understands English descriptions** (in Russian "dry female" gives
-f0 107 Hz and "low male" 150 Hz — i.e. the opposite; English "dry female narrator" 222 Hz and
-"low male" 136 Hz work immediately).
+**numbers are read in English** ("21 boxes" → "twenty one", so own number expander is needed before
+synthesis; TeraTTSv2 already does this with `num2words` — reuse it) and **Voice Design only
+understands English descriptions** (in Russian "dry female" gives f0 107 Hz and "low male" 150 Hz —
+i.e. the opposite; English "dry female narrator" 222 Hz and "low male" 136 Hz work immediately).
 
-Practical conclusion: TeraTTSv2 on CPU is 40× faster than VoxCPM2 on a 2080 at half the hardware cost,
-so **it voices the volumes today**, while VoxCPM2 stays a candidate for samples, trailers and 48-kHz
-timbre — pending a re-test on working PyTorch and on Volta.
+Practical conclusion: TeraTTSv2 on CPU is 4.7× faster than VoxCPM2 on a 2080 at half the hardware
+cost, so **it voices the volumes today**, while VoxCPM2 stays a candidate for samples, trailers and
+48-kHz timbre — pending a re-test on Volta.
 
 What this changes versus "just take Chatterbox":
 

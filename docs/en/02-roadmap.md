@@ -57,7 +57,12 @@ see [06](06-hybrid-mode.md)); NVMe as needed; an optional 2-card
 **S9 — Creative layer.** *(Blocked until the rig is built: board 29 Nov, RAM not bought. Placed here so it is not forgotten; quality can be measured on any GPU/CPU, Volta only affects RTF/VRAM and fp16 stability.)* Writing and voicing sit on the finished rig ([09](09-books-writing-and-voicing.md)), but the stack is PyTorch on Volta, not only GGUF. Build a service, not a script: `POST /tts {text, voice|ref, instruct, seed}` → 48 kHz wav, and a `/health` that synthesises a real phrase — an empty `ok` lies. One venv per engine (VoxCPM2 and Qwen3-TTS want different torch builds), because breaking a working TTS mid-render is the costliest regression. Before downloading weights check Volta: `torch.cuda.get_device_capability()` → `(7, 0)` plus one short synthesis; no bf16 on Volta, fp16 everywhere and watch for NaN. Download order: VoxCPM2 → Qwen3-TTS-1.7B → TeraTTSv2 (stress + CPU fallback) → whisper-large-v3 (WER gate); F5-RU is non-commercial and stays out of the main build. Acceptance: 3–5 Russian sentences, WER < 5 %, plus RTF and VRAM; if VoxCPM2 does not run on V100, report it and fall back. A book render is a separate systemd unit (7–12 h per volume) with a block cache and a watchdog that synthesises, not one that asks `/health`.
 - **23 Nov, CPU baseline:** TeraTTSv2 — RTF **0.34–0.67**, WER **1.8 %**, 2.5 GB RAM,
   automatic stress marks (checked via `normalize_text`). Measurement: [teratts-cpu-acceptance-2026-11-23](../research/teratts-cpu-acceptance-2026-11-23.md).
-  VoxCPM2 is still unverified — it needs a GPU.
+  TeraTTSv2 measured at RTF 0.47 with WER 1.8 % on CPU; VoxCPM2 measured on a 2080 Max-Q at
+  RTF **2.20** (peak VRAM 5.46 GB, a volume ≈ 31 h) — it copes, but costs 4.7× TeraTTSv2, so the
+  base engine for volumes stays TeraTTSv2 and VoxCPM2 goes to samples and trailers. The first run
+  reported RTF 18.8 and that number was invalid (transformers 5.20 with torch 2.5.1 disabled
+  PyTorch, and XTTS held the card so Windows spilled). It also reads digits in English and only
+  understands English voice descriptions. Measurement: [voxcpm2-rtx2080-acceptance-2026-11-23](../research/voxcpm2-rtx2080-acceptance-2026-11-23.md).
 **Criterion:** `/tts` returns 48 kHz wav for a Russian sentence, WER < 5 %, `/health` proves synthesis,
 a chapter render runs as a unit and survives a dsh-web restart.
 

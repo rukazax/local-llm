@@ -77,7 +77,7 @@ This section only lists the models and their VRAM cost.
 
 | Job | Model | Size · VRAM | License | Note |
 |---|---|---|---|---|
-| Voicing, primary | **VoxCPM2** (OpenBMB, 2B) | ~5.6 GB weights · ~8 GB (peak 5.46 GB) | Apache-2.0 | 48 kHz, Voice Design; SIM 81.1 and WER 3.6–5.2 % come from the card; ✅ **measured**: RTF 18.8 on a 2080 Max-Q (unusable for volume rendering), digits read in English, voice descriptions understood in English only |
+| Voicing, samples and trailers | **VoxCPM2** (OpenBMB, 2B) | ~5.6 GB weights · ~8 GB (peak 5.46 GB) | Apache-2.0 | 48 kHz, Voice Design; SIM 81.1 and WER 3.6–5.2 % come from the card; ✅ **measured**: RTF **2.20** on a 2080 Max-Q (a volume ≈ 31 h — it copes, but 4.7× the cost of TeraTTSv2), digits read in English, voice descriptions understood in English only |
 | Second voice | **Qwen3-TTS-12Hz-1.7B-Base** | ~4.8 GB | Apache-2.0 | ru WER 3.21, but stress marks need RUAccent |
 | Stress safety net, CPU fallback | **TeraTTSv2** (ONNX) | CPU · 2.5 GB RAM | OpenRAIL-M + attribution | RUAccent built in, commercial use allowed; ✅ **measured**: RTF 0.47 (0.34–0.67) on CPU, WER 1.8 % with GigaAM, 44.1 kHz |
 | RU cloning, experiments only | **F5-TTS_RUSSIAN** | ~4 GB | **CC BY-NC 4.0** | not part of the main build |
