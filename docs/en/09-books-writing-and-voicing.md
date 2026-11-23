@@ -26,7 +26,9 @@ and neither is limited by "intelligence" — both are limited by **pipeline disc
 2. **Speech.** In 2026 no open model reads Russian prose like a professional narrator. The best
    available option is **VoxCPM2** (2B, 30 languages, 48 kHz, Apache-2.0): voice cloning plus
    Voice Design from a description, and the best Russian timbre similarity in its class (SIM 81.1),
-   although its Russian WER is 3.6–5.2 % — one word in ~25 needs a gate.
+   although its Russian WER is 3.6–5.2 % — one word in ~25 needs a gate. On our rig it is now
+   measured: it fits in 8 GB, but RTF 18.8 — good for samples, not for a whole volume
+   ([acceptance run on a 2080](../research/voxcpm2-rtx2080-acceptance-2026-11-23.md)).
 3. **Emotion is data, not a volume knob.** The role markup must carry state (calm, angry, tired,
    whisper) and the engine receives it as a style instruction or a separate reference. Otherwise
    "expressiveness" means punctuation.
@@ -126,7 +128,7 @@ Data from model cards and public benchmarks; our own measurement is marked ✅.
 
 | Engine | Russian | Emotion | Audio | VRAM | Licence | Verdict |
 |---|---|---|---|---|---|---|
-| **VoxCPM2** (OpenBMB, 2B) | 30 languages; ru WER 5.21 (CV3) / 3.63 (MLS); **SIM 81.1, best in class** | Voice Design from a description + style guidance while cloning | **48 kHz** | ~8 GB, RTF ~0.3 (4090) | **Apache-2.0** | **primary candidate** |
+| **VoxCPM2** (OpenBMB, 2B) | 30 languages; ru WER 5.21 (CV3) / 3.63 (MLS); **SIM 81.1, best in class** | Voice Design from a description + style guidance while cloning | **48 kHz** | ~8 GB, RTF ~0.3 (4090), **✅ 18.8 on a 2080 Max-Q** | **Apache-2.0** | **primary candidate** for samples; not for full-volume rendering (peak VRAM 5.46 GB fits, speed does not) |
 | **Qwen3-TTS-1.7B** | 10 languages, ru WER 3.21, but stress complaints | voice description, 3-s cloning | 24 kHz | ~4.8 GB | Apache-2.0 | second candidate, check stress |
 | **Fish Audio S2** (4B) | ru WER 2.4–2.8, best intelligibility | yes | 24–44 kHz | ~10 GB | open weights | intelligibility candidate |
 | **TeraTTSv2** | Russian-native, **automatic stress** (RUAccent, MIT); ✅ WER **1.8 %** on 9 phrases (CPU, 44.1 kHz), names and numbers read correctly | 10 voice styles | **44.1 kHz** | ONNX, **CPU** | OpenRAIL-M + attribution (**commercial OK**) | stress safety net, runs without a GPU |
