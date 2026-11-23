@@ -129,7 +129,7 @@ Data from model cards and public benchmarks; our own measurement is marked ✅.
 | **VoxCPM2** (OpenBMB, 2B) | 30 languages; ru WER 5.21 (CV3) / 3.63 (MLS); **SIM 81.1, best in class** | Voice Design from a description + style guidance while cloning | **48 kHz** | ~8 GB, RTF ~0.3 (4090) | **Apache-2.0** | **primary candidate** |
 | **Qwen3-TTS-1.7B** | 10 languages, ru WER 3.21, but stress complaints | voice description, 3-s cloning | 24 kHz | ~4.8 GB | Apache-2.0 | second candidate, check stress |
 | **Fish Audio S2** (4B) | ru WER 2.4–2.8, best intelligibility | yes | 24–44 kHz | ~10 GB | open weights | intelligibility candidate |
-| **TeraTTSv2** | Russian-native, **automatic stress** (RUAccent, MIT) | 10 voice styles | 24 kHz | ONNX, CPU/GPU | OpenRAIL-M + attribution (**commercial OK**) | stress safety net |
+| **TeraTTSv2** | Russian-native, **automatic stress** (RUAccent, MIT); ✅ WER **1.8 %** on 9 phrases (CPU, 44.1 kHz), names and numbers read correctly | 10 voice styles | **44.1 kHz** | ONNX, **CPU** | OpenRAIL-M + attribution (**commercial OK**) | stress safety net, runs without a GPU |
 | **F5-TTS_RUSSIAN** | best Russian clone | via per-mood references | 24 kHz | ~4 GB | **CC BY-NC 4.0** | non-commercial only |
 | **XTTS v2** | present, audible accent | via reference | 24 kHz | ~2.5 GB | CPML (non-commercial) | already on the box, fallback |
 | **Chatterbox Multilingual** | 23 languages, accent audible | `exaggeration` 0–1 | 24 kHz | 4–6 GB | MIT | drafts only |
@@ -201,6 +201,10 @@ Acceptance is three measurements, not "the file exists":
 ---
 
 ## Download list
+
+Weights go to a **separate NVMe, never to the root filesystem**: `/srv/apps/models`
+(954 GB, 642 GB free, btrfs with zstd:1). Set `HF_HOME=/srv/apps/models/hf` — otherwise 23 GB of
+weights head for `/`, where 20 GB are free, and the download dies halfway.
 
 For this build (4×V100 = 128 GB, fp16, no bf16):
 
