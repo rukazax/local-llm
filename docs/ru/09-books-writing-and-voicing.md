@@ -284,6 +284,7 @@ TTS-сервер в середине рендера тома — самый до
 
 - VoxCPM2: [GitHub](https://github.com/OpenBMB/VoxCPM), [веса](https://huggingface.co/openbmb/VoxCPM2), [техотчёт arXiv 2606.06928](https://arxiv.org/abs/2606.06928) — 30 языков, 48 кГц, Apache-2.0, SIM ru 81,1
 - Qwen3-TTS: [карточка](https://selfhost.directory/models/qwen/qwen3-tts-12hz-1.7b-customvoice); критика русского — [Хабр, обсуждение](https://habr.com/ru/companies/bothub/news/988110/comments/), ru WER 3,21 — [бенчмарк](https://github.com/odiak/Qwen3-TTS-MLX)
+- TeraTTSv2 на CPU: [наша приёмка в этом репозитории](../research/teratts-cpu-acceptance-2026-11-23.md) — RTF 0,47, WER 1,8 %, RAM 2,5 ГБ, ударения автоматом
 - TeraTTSv2: [HF](https://huggingface.co/TeraSpace/TeraTTSv2), [лицензия и запуск](https://selfhost.directory/models/teraspace/terattsv2) — OpenRAIL-M + атрибуция, авто-ударения на RUAccent
 - F5-TTS_RUSSIAN: [HF](https://huggingface.co/Misha24-10/F5-TTS_RUSSIAN) — CC BY-NC 4.0
 - CosyVoice 3 и оговорка про русский: [разбор](https://www.banandre.com/blog/alibaba-cosyvoice-3-production-tts-voice-cloning-reality-check); официальный [репозиторий](https://github.com/goanpeca/CosyVoice)

@@ -273,6 +273,7 @@ TTS server in the middle of a volume render is the most expensive kind of regres
 
 - VoxCPM2: [GitHub](https://github.com/OpenBMB/VoxCPM), [weights](https://huggingface.co/openbmb/VoxCPM2), [technical report arXiv 2606.06928](https://arxiv.org/abs/2606.06928) — 30 languages, 48 kHz, Apache-2.0, SIM ru 81.1
 - Qwen3-TTS: [model card](https://selfhost.directory/models/qwen/qwen3-tts-12hz-1.7b-customvoice); Russian criticism — [Habr discussion](https://habr.com/ru/companies/bothub/news/988110/comments/); ru WER 3.21 — [benchmark](https://github.com/odiak/Qwen3-TTS-MLX)
+- TeraTTSv2 on CPU: [our acceptance run in this repo](../research/teratts-cpu-acceptance-2026-11-23.md) — RTF 0.47, WER 1.8 %, 2.5 GB RAM, automatic stress
 - TeraTTSv2: [HF](https://huggingface.co/TeraSpace/TeraTTSv2), [licence and run](https://selfhost.directory/models/teraspace/terattsv2) — OpenRAIL-M + attribution, RUAccent-based stress
 - F5-TTS_RUSSIAN: [HF](https://huggingface.co/Misha24-10/F5-TTS_RUSSIAN) — CC BY-NC 4.0
 - CosyVoice 3 and the Russian caveat: [reality check](https://www.banandre.com/blog/alibaba-cosyvoice-3-production-tts-voice-cloning-reality-check); [repo](https://github.com/goanpeca/CosyVoice)
