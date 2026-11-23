@@ -139,6 +139,23 @@ Data from model cards and public benchmarks; our own measurement is marked ✅.
 | **Silero** | Russian-native | none | 48 kHz | CPU | CC BY-NC-SA | flat but solid |
 | **edge-tts** | best "neutral" Russian by ear | none | 24 kHz | 0 | unofficial endpoint, no publication rights | canary, not a base |
 
+### What we already measured
+
+| Engine | Hardware | Result | Fitness |
+|---|---|---|---|
+| **TeraTTSv2** | AI-NAS, **CPU** | RTF 0.47 (0.34–0.67), WER 1.8 %, 2.5 GB RAM, 44.1 kHz, automatic stress | the base engine for volumes |
+| **VoxCPM2** | RTX 2080 Max-Q 8 GB | 5.5 GB VRAM, 48 kHz, RTF 18.8 — **the number is invalid**: transformers 5.20 requires torch ≥ 2.6, 2.5.1 was installed, so the engine ran without PyTorch | re-measure after fixing the environment |
+
+Two VoxCPM2 defects that do not depend on the environment and are confirmed by measurement:
+**numbers are read in English** ("21 boxes" → "twenty one", so a own number expander is needed before
+synthesis) and **Voice Design only understands English descriptions** (in Russian "dry female" gives
+f0 107 Hz and "low male" 150 Hz — i.e. the opposite; English "dry female narrator" 222 Hz and
+"low male" 136 Hz work immediately).
+
+Practical conclusion: TeraTTSv2 on CPU is 40× faster than VoxCPM2 on a 2080 at half the hardware cost,
+so **it voices the volumes today**, while VoxCPM2 stays a candidate for samples, trailers and 48-kHz
+timbre — pending a re-test on working PyTorch and on Volta.
+
 What this changes versus "just take Chatterbox":
 
 - **Russian timbre similarity depends on cloning quality, not on the number of languages.**
