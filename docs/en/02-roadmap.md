@@ -19,6 +19,8 @@ gantt
     S6. API/UI + NAS integration  :6, 7
     S7. Models in production      :7, 8
     S8. Upgrades (RAM, NVMe, B-rig):8, 9
+    section Creative
+    S9. TTS service + book acceptance :9, 10
 ```
 
 **S0 — Lots check.** Buy 4× V100 SXM2 **32GB** (homogeneous!), a 4-module base with NVLink bridges,
@@ -51,6 +53,8 @@ every new model goes through llama-bench into the models database.
 **S8 — Upgrades.** Second socket + 256 GB RAM first (unlocks Flash Next and hybrid tier 2,
 see [06](06-hybrid-mode.md)); NVMe as needed; an optional 2-card
 “instance B” when parallel workloads appear; a 192–256 GB platform only when 128 GB is truly not enough.
+
+**S9 — Creative layer.** Writing and voicing sit on the finished rig ([09](09-books-writing-and-voicing.md)), but the stack is PyTorch on Volta, not only GGUF. Build a service, not a script: `POST /tts {text, voice|ref, instruct, seed}` → 48 kHz wav, and a `/health` that synthesises a real phrase — an empty `ok` lies. One venv per engine (VoxCPM2 and Qwen3-TTS want different torch builds), because breaking a working TTS mid-render is the costliest regression. Before downloading weights check Volta: `torch.cuda.get_device_capability()` → `(7, 0)` plus one short synthesis; no bf16 on Volta, fp16 everywhere and watch for NaN. Download order: VoxCPM2 → Qwen3-TTS-1.7B → TeraTTSv2 (stress + CPU fallback) → whisper-large-v3 (WER gate); F5-RU is non-commercial and stays out of the main build. Acceptance: 3–5 Russian sentences, WER < 5 %, plus RTF and VRAM; if VoxCPM2 does not run on V100, report it and fall back. A book render is a separate systemd unit (7–12 h per volume) with a block cache and a watchdog that synthesises, not one that asks `/health`.
 
 ---
 #local-llm #roadmap #setup #v100

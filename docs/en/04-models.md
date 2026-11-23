@@ -70,6 +70,29 @@ fits one card; 70B LoRA fits two. Stack: bitsandbytes (SM70 supported) + axolotl
 verify Unsloth builds under SM70. Own “uncensored” model: abliteration/Heretic first, then LoRA on
 your data — a two-stage pipeline.
 
+## F. Speech and books 🎙
+
+The creative layer has its own document — [09 · Writing and voicing a book](09-books-writing-and-voicing.md).
+This section only lists the models and their VRAM cost.
+
+| Job | Model | Size · VRAM | License | Note |
+|---|---|---|---|---|
+| Voicing, primary | **VoxCPM2** (OpenBMB, 2B) | ~5.6 GB weights · ~8 GB | Apache-2.0 | 48 kHz, Voice Design from a text description; ru SIM 81.1, best in class; ru WER 3.6–5.2 % |
+| Second voice | **Qwen3-TTS-12Hz-1.7B-Base** | ~4.8 GB | Apache-2.0 | ru WER 3.21, but stress marks need RUAccent |
+| Stress safety net, CPU fallback | **TeraTTSv2** (ONNX) | CPU/GPU | OpenRAIL-M + attribution | RUAccent built in, commercial use allowed |
+| RU cloning, experiments only | **F5-TTS_RUSSIAN** | ~4 GB | **CC BY-NC 4.0** | not part of the main build |
+| Voicing acceptance (WER) | **whisper-large-v3** | 4.4 GB | MIT | 15.2× real time on V100 |
+| Stress marks before synthesis | **ruaccent** | CPU | MIT | homographs 0.82 vs 0.38 for silero |
+| Style RAG over the author corpus | **Qwen3-Embedding-4B** | 4.5 GB | Apache-2.0 | already in table A |
+
+**The writer and the editor must be different models.** Prose: Qwen3.8-27B (or its abliterated
+variant); editing: Qwen2.5-72B; a "second prose voice": **Hermes 4-70B**, Magnum or Miqu. One model
+writing and praising its own text hides the water; swapping the model makes it obvious.
+
+VRAM: 27B Q8 (29 GB) + 72B Q6 (62 GB) + TTS 8 + Whisper 4.4 + embeddings 4.5 ≈ 108 GB — it fits into
+128 GB, but context makes it tight. Keep either "writer + editor" or "writer + TTS + Whisper +
+embeddings" resident.
+
 ## Sphere → model cheat sheet 🗺
 
 | Sphere | First line | Reserve |
