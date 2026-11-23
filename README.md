@@ -33,6 +33,7 @@
 | [Роадмап](#-роадмап-сборки-и-настройки) | этапы сборки и настройки |
 | [Сборка и запуск](docs/ru/07-build-and-launch.md) | пошаговый мануал до первого токена |
 | [Пул 128 ГБ](docs/ru/08-1cat-vllm-nvfp4.md) | 1Cat-vLLM 1.5.4, NVFP4, 425 ток/с |
+| [Книги и озвучка](docs/ru/09-books-writing-and-voicing.md) | писать локальной моделью и озвучивать по ролям |
 | [Перспективы](#-перспективы-и-направления) | где это применять |
 | [Выводы](#-выводы) | главное по итогам исследований |
 | [Документация](#-документация) | RU/EN файлы базы знаний |
@@ -301,6 +302,7 @@ gantt
 | [Гибрид VRAM+RAM](docs/ru/06-hybrid-mode.md) | [Hybrid mode](docs/en/06-hybrid-mode.md) |
 | [Сборка и запуск](docs/ru/07-build-and-launch.md) | [Build & launch](docs/en/07-build-and-launch.md) |
 | [Пул 128 ГБ: 1Cat-vLLM + NVFP4](docs/ru/08-1cat-vllm-nvfp4.md) | [One 128 GB pool: 1Cat-vLLM + NVFP4](docs/en/08-1cat-vllm-nvfp4.md) |
+| [Книги и озвучка](docs/ru/09-books-writing-and-voicing.md) | [Books & voice](docs/en/09-books-writing-and-voicing.md) |
 
 ## 📖 Источники
 
