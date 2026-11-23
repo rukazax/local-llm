@@ -231,7 +231,10 @@ TTS server in the middle of a volume render is the most expensive kind of regres
 ## Pitfalls
 
 - **V100 and TTS.** Volta (sm70) needs a torch build with sm70 kernels; some "V100" images ship
-  without them and fail on the first tensor. Check before downloading weights:
+  without them and fail on the first tensor. This is the **only exception** to "llama.cpp and
+  1Cat-vLLM only": LLM inference never touches torch, while TTS and Whisper only run on it —
+  so the PyTorch stack is installed separately and scoped to the creative layer
+  (see [Engines](03-engines.md)). Check before downloading weights:
   `python -c "import torch;print(torch.cuda.get_device_capability())"` → `(7, 0)`, then one short
   synthesis.
 - **No bf16 on Volta.** Wherever a model asks for bf16, use fp16 and watch for NaN — diffusion TTS
